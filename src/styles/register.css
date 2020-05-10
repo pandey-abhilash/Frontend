@@ -1,0 +1,77 @@
+.register{
+    width:400px;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6); 
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+}
+
+.register-form{
+    display: flex;
+    padding: 10px;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.register-form-heading h1{
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: 500px;
+}
+
+.register-form-body{
+    padding: 10px;
+}
+.register-form-body div{
+    padding: 10px;
+}
+
+input[type="text"], input[type="password"]{
+    padding: 10px;
+    border: none;
+    width: 95%;
+    
+}
+.form-lable{
+    padding-bottom: 5px;
+    font-size: 14;
+    text-align: left;
+}
+.register-link {
+    display: flex;
+    justify-content: space-around;
+}
+.register-link a{
+    text-decoration: none;
+    color: #fff;
+}
+.register-link a:hover{
+    text-decoration: none;
+    color:#09b83e;
+}
+
+.form-action{
+    display: flex;
+    justify-content: flex-start;
+}
+
+button{
+    margin-left: 10px;
+    border: none;
+    padding: 10px 15px 10px 15px;
+    font-size: 14px;
+    background: #fff;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 500;
+    border-radius: 50px;
+    border: 1px solid #3aaf85;
+    cursor: pointer;
+}
+button:hover{
+    background:#3aaf85;
+    color: #fff;
+}
