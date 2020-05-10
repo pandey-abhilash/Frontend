@@ -4,11 +4,12 @@ import AuthRouter from './containers/Pages/Auth/AuthRouter';
 
 class App extends Component {
   render() {
+
     let user = 'hello';
     if(user){
-      return <ApplicationRouter/>
+      return <div id="app"><ApplicationRouter/></div>
     }
-    return<div style={{margin:'10px'}}> <AuthRouter/></div>
+    return<div style={{margin:'10px'}}  id="app"> <AuthRouter/></div>
   }
 }
 export default App;
