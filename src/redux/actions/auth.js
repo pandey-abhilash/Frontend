@@ -19,5 +19,13 @@ reducerFactory.addAction('LOGIN_LOADING', `${reducerName}Loading`,
   }
 );
 
+// reducerFactory.addAction('REGISTER_USERS', 'registerUser',
+//   (body) => status,
+//    (state, action) => {
+//     const newState = Object.assign({}, state);
+//     newState.loading = action.data;
+//     return newState;
+//   }
+// );
 
 export default reducerFactory;
