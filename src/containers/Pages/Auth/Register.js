@@ -31,7 +31,7 @@ class Register extends Component {
             return  toastr.warning('Please enter 10 digit phone number.')
         }
         let newUser={displayName, email, phone, password, confirmPassword}
-        // userRedcuer.registerUser(newUser)
+        userRedcuer.registerUser(newUser)
     }
     onSetState(value){
         this.setState(value);

@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
-// import toastr from 'toastr';
-// import * as AuthApi from '../api/auth';
 import ReducerFactory from '../../utils/reducerFactory';
+import * as authAPI from '../apis/authApi';
+import toastr from 'toastr';
+
 const reducerName = 'auth';
 const initialState = {
     authToken:null,
@@ -19,13 +20,18 @@ reducerFactory.addAction('LOGIN_LOADING', `${reducerName}Loading`,
   }
 );
 
-// reducerFactory.addAction('REGISTER_USERS', 'registerUser',
-//   (body) => status,
-//    (state, action) => {
-//     const newState = Object.assign({}, state);
-//     newState.loading = action.data;
-//     return newState;
-//   }
-// );
+reducerFactory.addAction('REGISTER_USERS', 'registerUser',
+  async (body) => {
+    debugger
+    const response= await authAPI.registerUser(body);
+    return response.data
+  },
+   (state, action) => {
+    debugger
+    const newState = Object.assign({}, state);
+    newState.loading = action.data;
+    return newState;
+  }
+);
 
 export default reducerFactory;
