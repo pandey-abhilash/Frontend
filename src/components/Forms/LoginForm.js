@@ -10,19 +10,29 @@ class LoginForm extends Component {
             uError:null,
             pErro:null
         }
+        this.onChangeUsername=this.onChangeUsername.bind(this)
+        this.onChangePassword=this.onChangePassword.bind(this)
         
     }
     onChangeUsername(e){
-
-        
+        //debugger
+        const{value}=e.target
+        const{onSetState}=this.props
+        onSetState({email:value})
+        console.log(e.target.value)
 
     }
     onChangePassword(e){
+        const{value}=e.target
+        const{onSetState}=this.props
+        onSetState({password:value})
+        
 
 
     }
 
     render() {
+        const{email,password,onSubmit}=this.props
         return (
             <section className="login-form">
                 <div className="login-form-heading">
@@ -34,19 +44,22 @@ class LoginForm extends Component {
                             <div className="form-lable" style={{ paddingLeft: '0px' }}><span>Username*</span></div>
                             <input 
                                 type="text" 
+                                onChange={this.onChangeUsername}
+                                value={email}
                                 placeholder="Enter you registered email id" 
                                 /> 
-                            {this.state.uError && <span style={{color:"red", fontSize:'8px'}}>Enter valid email id.</span>}
                         </div>
                         <div>
                             <div className="form-lable" style={{ paddingLeft: '0px' }}><span>Password*</span></div>
                             <input 
                             type="password" 
+                            onChange={this.onChangePassword}
+                            value={password}
                             placeholder="Enter your password" 
                             />
                         </div>
                         <div className="form-action" style={{ paddingLeft: '0px' }}>
-                            <button >Login</button>
+                            <button onClick={(e)=>onSubmit(e)}>Login</button>
                             <button onClick={() => history.push('/register/')}>Sign Up</button>
 
                         </div>

@@ -4,6 +4,8 @@ import '../../../styles/header.css';
 import { Link } from 'react-router-dom';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import {connect} from 'react-redux'
+import userReducer from '../../../redux/actions/auth'
 
 class Header extends Component {
 
@@ -12,6 +14,7 @@ class Header extends Component {
         this.state = {
             anchorEl: null
         }
+        this.logout=this.logout.bind(this)
     }
     componentDidMount() {
         const humburger = document.querySelector(".humburger");
@@ -24,7 +27,12 @@ class Header extends Component {
             });
         })
     }
+    logout(){
+        window.localStorage.setItem("myproject",null)
+        window.location.reload()    
+    }
     render() {
+        const {user}=this.props
         return (
             <header style={{position:'fixed' , width:'100%'}}>
                 <nav>
@@ -52,7 +60,7 @@ class Header extends Component {
                                         border: '2px solid #0000'
                                     }}
                                 />
-                                <span >Abilash Pandey</span>
+                                <span >{user.displayName}</span>
                             </div>
                             <Menu
                                 id="simple-menu"
@@ -64,27 +72,33 @@ class Header extends Component {
                                 <Link to='/app/profile' style={{ textDecoration: 'none' }}>
                                     <MenuItem onClick={() => this.setState({ anchorEl: null })}> Profile</MenuItem>
                                 </Link>
-                                <Link to='/' style={{ textDecoration: 'none' }}>
-                                    <MenuItem onClick={() => this.setState({ anchorEl: null })}>Logout</MenuItem>
-                                </Link>
+                                    <MenuItem onClick={()=>this.logout()}>Logout</MenuItem>
                             </Menu>
-                            <div className="profile-lable">
+                            {/* <div className="profile-lable">
                                 <Link to='/app/profile'>
                                     <span >Profile</span>
                                 </Link>
-                            </div>
+                            </div> */}
                         </li>
-                        <li className="profile-lable">
+                        {/* <li className="profile-lable">
                             <div className="profile-lable">
                                 <Link to='/'>
                                     <span >Log Out</span>
                                 </Link>
                             </div>
-                        </li>
+                        </li> */}
                     </ul>
                 </nav>
             </header>
         )
     }
 }
-export default Header;
+//export default Header;
+export default connect(
+    state=>({
+        user:state.get('auth').user
+    }),
+    dispatch=>({
+        userReducer:userReducer.getActions(dispatch)
+    })
+)(Header)
