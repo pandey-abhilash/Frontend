@@ -13,9 +13,10 @@
     align-content: center;
 }
 .profile-img{
-    height:30vh;
+    height:auto;
     width: 100%;
-    background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: rgb(34,193,195);
+    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(74,140,201,1) 100%);
     margin-bottom:5px;
     border-radius: 30px;
     color: #FFFF;
