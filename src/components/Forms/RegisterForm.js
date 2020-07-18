@@ -38,7 +38,12 @@ export default class RegisterForm extends Component {
                             <div className="form-lable" style={{ paddingLeft: '0px' }}><span>Phone Number"</span></div>
                             <input
                                 type="number"
-                                style={{ width: "97%", padding: '9px', margin: '0px 2px 0px 0px'}}
+                                style={{ 
+                                    width: "98%", 
+                                    padding: '15px', 
+                                    margin: '0px 2px 0px 0px',
+                                    backgroundColor:'#ededed !important' 
+                                }}
                                 placeholder="Enter you valid phone number."
                                 value={phone}
                                 onChange={(e) => onSetState({ phone: e.target.value })}

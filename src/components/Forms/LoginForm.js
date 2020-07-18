@@ -6,10 +6,7 @@ import {Link} from 'react-router-dom';
 class LoginForm extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            uError:null,
-            pErro:null
-        }
+        this.state = {}
         this.onChangeUsername=this.onChangeUsername.bind(this)
         this.onChangePassword=this.onChangePassword.bind(this)
         
@@ -64,8 +61,8 @@ class LoginForm extends Component {
 
                         </div>
                         <div className="login-link" style={{ paddingLeft: '0px' }}>
-                            <div style={{ paddingLeft: '0px' }}><Link to='/forget/pass/'>Forget Password ?</Link></div>
-                            <div style={{ paddingLeft: '0px' }}><Link to='/reset/pass/'>Reset Password ?</Link></div>
+                            <div style={{ paddingLeft: '0px'}}><Link to='/forget/pass/'>Forget Password ?</Link></div>
+                            <div style={{ paddingLeft: '0px'}}><Link to='/reset/pass/'>Reset Password ?</Link></div>
                         </div>
                     </form>
                 </div>
