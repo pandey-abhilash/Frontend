@@ -26,8 +26,13 @@ reducerFactory.addAction('REGISTER_USERS', 'registerUser',
     return response.data
   },
    (state, action) => {
+     if(action.data.success){
+       toastr.success(action.data.message)
+     }else{
+      toastr.error(action.data.message)
+     }
+     state.loading=false
     const newState = Object.assign({}, state);
-    newState.loading = action.data;
     return newState;
   }
 );
@@ -39,15 +44,17 @@ reducerFactory.addAction('LOGIN_USERS', 'loginUser',
     return response.data
   },
    (state, action) => {
-    
-    if(action.data){
-      const{email,password}=action.data 
+    if(action.data.success){
+      const{email,password}=action.data.data 
       window.localStorage.setItem("myproject",JSON.stringify({email,password}));
-      state.user=action.data
+      state.user=action.data.data
+      state.loggin = true;
+    }else{
+        toastr.warning(action.data.message)
+        state.loggin=false
     } 
-
     const newState = Object.assign({}, state);
-    newState.loading = action.data;
+    newState.loading = false;
     return newState;
   }
 );

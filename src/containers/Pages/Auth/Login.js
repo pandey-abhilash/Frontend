@@ -9,8 +9,8 @@ class Login extends Component {
     constructor(props){ //dynamic 
         super(props)
         this.state={
-            email:null,
-            password:null 
+            email:'',
+            password:'' 
 
         } 
         this.onSubmit=this.onSubmit.bind(this)  

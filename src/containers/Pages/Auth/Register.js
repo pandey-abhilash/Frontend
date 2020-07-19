@@ -8,11 +8,11 @@ class Register extends Component {
     constructor(props){
         super(props)
         this.state={
-            displayName:null,
-            email:null,
-            phone:null,
-            password:null,
-            confirmPassword:null
+            displayName:'',
+            email:'',
+            phone:'',
+            password:'',
+            confirmPassword:''
         }
         this.onSubmit = this.onSubmit.bind(this);
         this.onSetState = this.onSetState.bind(this);
@@ -20,7 +20,6 @@ class Register extends Component {
     onSubmit(){
         const { userRedcuer } = this.props;
         const {displayName,email, phone, password, confirmPassword}= this.state;
-        debugger
         if(!displayName || !email || !phone || !password || !confirmPassword){
             return toastr.warning("Input field cannot be empty.")
         } 
@@ -31,7 +30,16 @@ class Register extends Component {
             return  toastr.warning('Please enter 10 digit phone number.')
         }
         let newUser={displayName, email, phone, password, confirmPassword}
-        userRedcuer.registerUser(newUser)
+        userRedcuer.registerUser(newUser).then(res=>{
+            if(res.success){
+                this.setState({ 
+                    displayName:'',
+                    email:'',
+                    phone:null,
+                    password:'',
+                    confirmPassword:''});
+            }
+        })
     }
     onSetState(value){
         this.setState(value);

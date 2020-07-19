@@ -11,21 +11,17 @@ class LoginForm extends Component {
         this.onChangePassword=this.onChangePassword.bind(this)
         
     }
+    
     onChangeUsername(e){
-        //debugger
         const{value}=e.target
         const{onSetState}=this.props
         onSetState({email:value})
-        console.log(e.target.value)
-
     }
+
     onChangePassword(e){
         const{value}=e.target
         const{onSetState}=this.props
         onSetState({password:value})
-        
-
-
     }
 
     render() {

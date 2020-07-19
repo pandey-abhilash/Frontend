@@ -1,33 +1,36 @@
 // Component
 import React from 'react'
-import Modal from '@material-ui/core/Modal';
+import { Dialog, DialogTitle, DialogContent } from '@material-ui/core/';
+
+import Slide from '@material-ui/core/Slide';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export default class EditProfile extends React.Component {
-    constructor(props){
-        super(props)
-    }
-    render(){
-        const{open,handleClose}=this.props
-        debugger
-
-        return <div>
-           <Modal
-           style={{ 
-            position: 'absolute',
-            width: 400,
-            backgroundColor:'#fff',
-            border: '2px solid #000',
-            boxShadow: '5px',
-            padding:'10px'
-          }}
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    const { open, handleClose } = this.props
+    return <div>
+      <Dialog
         open={open}
-        onClose={()=>handleClose()}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={() => handleClose()}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
       >
-     <div >Edit Modal</div>
-      </Modal>
-        </div>
-    }
+        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+          Edit Modal
+        </DialogTitle>
+        <DialogContent dividers>
+          Hllo
+        </DialogContent>
+      </Dialog>
+    </div>
+  }
 
 }
