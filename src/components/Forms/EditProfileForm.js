@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core/';
 export class EditProfileForm extends React.Component {
     render() {
 
-        const { user } = this.props //destraction
+        const { user } = this.props 
 
         return (
             <div>
