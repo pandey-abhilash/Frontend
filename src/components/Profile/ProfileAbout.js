@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import { Grid, Card, Typography, CardContent, Divider } from '@material-ui/core';
+import {ProfileBasicDetail} from './ProfileBasicDetail'
+import {connect} from 'react-redux'
+import userReducer from '../../redux/actions/auth'
 
 class ProfileAbout extends Component {
+    constructor(props) {
+        super(props)
+    }
     render() {
         return (
             <section >
@@ -34,7 +40,11 @@ class ProfileAbout extends Component {
                                     </div>
                                     <Divider />
                                     <CardContent>
-                                        hello
+                                        <div>
+                                            <ProfileBasicDetail user={this.props.user}/>
+
+                                   
+                                        </div>
                                     </CardContent>
                                 </div>
                             </Card>
@@ -47,4 +57,11 @@ class ProfileAbout extends Component {
     }
 }
 
-export default ProfileAbout;
+export default connect (
+    state=>({
+        user:state.get('auth').user
+    }),
+    dispatch=>({
+        userReducer:userReducer.getActions(dispatch)
+    })
+)(ProfileAbout)

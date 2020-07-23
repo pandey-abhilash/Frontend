@@ -1,36 +1,53 @@
 // Component
 import React from 'react'
-import { Dialog, DialogTitle, DialogContent } from '@material-ui/core/';
+import { Dialog, DialogTitle, DialogContent, Button, DialogActions } from '@material-ui/core/';
+import {connect} from 'react-redux'
+import userReducer from '../../redux/actions/auth'
 
 import Slide from '@material-ui/core/Slide';
+import { EditProfileForm } from '../Forms/EditProfileForm'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+    return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default class EditProfile extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-  render() {
-    const { open, handleClose } = this.props
-    return <div>
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={() => handleClose()}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Edit Modal
+class EditProfile extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+    render() {
+        const { open, handleClose } = this.props
+        console.log(this.props.user)
+        return <div>
+            <Dialog
+
+                open={open}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={() => handleClose()}
+                aria-labelledby="alert-dialog-slide-title"
+                aria-describedby="alert-dialog-slide-description"
+            >
+                <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+                    Edit Profile
         </DialogTitle>
-        <DialogContent dividers>
-          Hllo
-        </DialogContent>
-      </Dialog>
-    </div>
-  }
+                <DialogContent dividers>
+                    <div>
+                        <EditProfileForm user={this.props.user} />
+                    </div>
+
+                </DialogContent>
+            </Dialog>
+        </div>
+    }
 
 }
+
+export default connect (
+    state=>({
+        user:state.get('auth').user
+    }),
+    dispatch=>({
+        userReducer:userReducer.getActions(dispatch)
+    })
+)(EditProfile)
