@@ -1,6 +1,6 @@
-import React ,{component} from 'react'
+import React ,{Component} from 'react'
 
-export class ProfileBasicDetail extends React.Component{
+export class ProfileBasicDetail extends Component{
     render(){
         const { user } = this.props 
         return(

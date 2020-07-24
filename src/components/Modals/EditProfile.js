@@ -1,5 +1,5 @@
 // Component
-import React from 'react'
+import React ,{Component} from 'react'
 import { Dialog, DialogTitle, DialogContent, Button, DialogActions } from '@material-ui/core/';
 import {connect} from 'react-redux'
 import userReducer from '../../redux/actions/auth'
@@ -11,7 +11,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-class EditProfile extends React.Component {
+class EditProfile extends Component {
     constructor(props) {
         super(props)
     }
