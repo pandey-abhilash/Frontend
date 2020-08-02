@@ -1,18 +1,17 @@
 /* eslint-disable no-param-reassign */
 import ReducerFactory from '../../utils/reducerFactory';
-import * as authAPI from '../apis/authApi';
+import * as postAPI from '../apis/postApi';
 import toastr from 'toastr';
 
-const reducerName = 'auth';
+const reducerName = 'post';
 const initialState = {
-    authToken:null,
-    loggin:false,
-    user: null, 
     error: null,
     loading: false,
+    myposts:[],
+    totalPosts:0
 };
 const reducerFactory = new ReducerFactory(reducerName, initialState);
-reducerFactory.addAction('LOGIN_LOADING', `${reducerName}Loading`,
+reducerFactory.addAction('POST_LOADING', `${reducerName}Loading`,
   (status) => status, (state, action) => {
     const newState = Object.assign({}, state);
     newState.loading = action.data;
@@ -20,9 +19,26 @@ reducerFactory.addAction('LOGIN_LOADING', `${reducerName}Loading`,
   }
 );
 
-reducerFactory.addAction('REGISTER_USERS', 'registerUser',
+reducerFactory.addAction('MY_POSTS', 'fetchPosts',
   async (body) => {
-    const response= await authAPI.registerUser(body);
+    const response= await postAPI.fetchPosts(body);
+    return response.data
+  },
+   (state, action) => {
+     if(action.data.success){
+       state.myposts= action.data.data
+     }else{
+      toastr.error(action.data.message)
+     }
+     state.loading=false
+    const newState = Object.assign({}, state);
+    return newState;
+  }
+);
+
+reducerFactory.addAction('CREATE_POSTS', 'createPosts',
+  async (body) => {
+    const response= await postAPI.createPosts(body);
     return response.data
   },
    (state, action) => {
@@ -38,26 +54,6 @@ reducerFactory.addAction('REGISTER_USERS', 'registerUser',
 );
 
 
-reducerFactory.addAction('LOGIN_USERS', 'loginUser',
-  async (body) => {
-    const response= await authAPI.loginUser(body);
-    return response.data
-  },
-   (state, action) => {
-    if(action.data.success){
-      const{email,password}=action.data.data 
-      window.localStorage.setItem("myproject",JSON.stringify({email,password}));
-      state.user=action.data.data
-      state.loggin = true;
-    }else{
-        toastr.warning(action.data.message)
-        state.loggin=false
-    } 
-    const newState = Object.assign({}, state);
-    newState.loading = false;
-    return newState;
-  }
-);
 
 
 

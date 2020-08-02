@@ -1,36 +1,72 @@
 import React, { Component } from 'react'
 import '../../../styles/Profile.css';
-import { Grid, Paper, Typography, Divider ,TextField, Button,CardContent,Card} from '@material-ui/core'
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
-import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
+import { connect } from 'react-redux';
+import {
+    Grid, Paper, Typography, Divider, TextField, Button, CardContent,
+    CardHeader, Card, Icon, IconButton, Avatar, CardActions
+} from '@material-ui/core'
+import toastr from 'toastr';
+import moment from 'moment'
+import { MoreVert, ExpandMore, Favorite, Share, CreateNewFolder } from '@material-ui/icons/';
+import postsReducer from '../../../redux/actions/post';
+import MyPostCard from '../../../components/Cards/MyPostCard';
 
-
-export default class MyPost extends Component {
-    constructor(){
+class MyPost extends Component {
+    constructor() {
         super()
-        this.state={
-            data:false
+        this.state = {
+            data: false,
+            pageNumber: 0,
+            pageSize: 10,
+            message: null,
+            expanded: false
         }
+        this.onGetMyPosts = this.onGetMyPosts.bind(this);
+        this.onCreatePosts = this.onCreatePosts.bind(this);
     }
-    componentDidMount(){
-        let url="http://localhost:3001/post/0/10"
-        fetch(url,{
-            method:'GET',
-            header:{
-                'Accept':'application/json',
-                'Content-Type':'application/json',
+    componentDidMount() {
+        this.onGetMyPosts();
+    }
+
+    onCreatePosts() {
+        const { postsReducer, user } = this.props
+        const { message } = this.state;
+        if (!message) {
+            return toastr.warning("Please enter something in the to posts.")
+        }
+        let data = {
+            displayName: user.displayName,
+            email: user.email,
+            message,
+            comments: [],
+            likes: [],
+            images: [],
+            tags: [],
+            shares: [],
+            likesCount: 0,
+            commentsCount: 0,
+        }
+        postsReducer.createPosts(data).then(res => {
+            if (res.success) {
+                this.setState({ message: null }, () => {
+                    this.onGetMyPosts();
+                })
             }
-        }).then((result)=>{
-            result.json().then((resp)=>{
-                this.setState({data:resp})
-            })
         })
     }
+
+    onGetMyPosts() {
+        const { pageNumber, pageSize } = this.state
+        const { postsReducer, user } = this.props
+        postsReducer.fetchPosts({
+            email: user.email,
+            pageNumber,
+            pageSize
+        });
+    }
     render() {
-        const data=this.state.data;
-        console.warn(data);
+        const data = this.state.data;
+        const { myposts } = this.props
         return (
             <div className='profile'>
                 <Grid container justify="space-between" >
@@ -41,84 +77,57 @@ export default class MyPost extends Component {
                     </Grid>
                     <Grid item sm={12} md={6} lg={6}>
                         <Paper style={{ padding: '20px' }}>
-                            <div>
-                                <Typography variant="h5"><b>Publish your post here....</b></Typography>
-                                <MoreHorizIcon style={{marginLeft:'750px'}}/>
-                                <Divider />
-                            </div>
-                            <div style={{padding:'20px'}}>
+                        <IconButton
+                                    style={{ padding: '5px', color: "#5b78c7", cursor:"none" }}
+                                >
+                                    <CreateNewFolder/>
+                                </IconButton>
+                            <Typography variant="button" style={{ paddingLeft: "5px", color: "#5b78c7" }} gutterBottom>
+                                Post something in your mind.
+                                </Typography>
+                            <Divider />
+                            <div style={{ padding: '20px' }}>
                                 <TextField
                                     id="outlined-multiline-static"
                                     multiline
-                                    style={{width:"100%"}}
+                                    value={this.state.message}
+                                    style={{ width: "100%" }}
+                                    onChange={e => this.setState({ message: e.target.value })}
                                     rows={4}
                                     placeholder="Write something in like to share"
                                     variant="outlined"
                                 />
-                                <div style={{marginTop:'10px', alignContent:"end"}}>
-                                    <Button style={{backgroundColor:"#5b78c7", color:"#fff"}}>Publish</Button>
-                                    <Button style={{backgroundColor:"#5b78c7", color:"#fff",marginLeft:"5px"}}>Add Photo</Button>
+                                <div style={{ marginTop: '10px', alignContent: "end" }}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        // style={{ backgroundColor: "#5b78c7", color: "#fff" }}
+                                        onClick={(e) => this.onCreatePosts(e)}
+                                    >
+                                        Publish
+                                            </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        style={{ marginLeft: "5px" }}
+                                    >
+                                        Add Photo
+                                        </Button>
                                 </div>
                             </div>
                             <div>
-                          
-                            <Divider />
-                            
+                                <Divider />
                             </div>
-                            
                         </Paper>
-
-                        <Card className="card" style={{ width: '100%' }}>
-                        
-                                <div style={{ padding: '10px' }}>
-                                    <div className="heading">
-                                        <ThumbUpIcon style={{marginLeft:'200px'}}/>Like
-                                        <ChatBubbleOutlineIcon style={{marginLeft:'250px'}}/>Comment
-                                    </div>
-                                    <Divider />
-                                    <CardContent>
-                                    
-                                        <div>
-                                            
-                                        <p>View previous comments</p>
-                                       
-                                        <TextField
-                                    id="outlined-multiline-static"
-                                    multiline
-                                    style={{width:"45%",marginLeft:'55px',marginTop:'8px',border:'1px solid black',borderRadius:'25px'}}
-                                    rows={3}
-                                    placeholder="Write"
-                                    variant="outlined" 
-                                    
+                        <div style={{ paddingTop: '20px' }}>
+                            {myposts.length > 0 && myposts.map(post => {
+                                return <MyPostCard
+                                    post={post}
                                 />
-                                   <TextField
-                                    id="outlined-multiline-static"
-                                    multiline
-                                    style={{width:"90%",marginLeft:'55px',marginTop:'8px',border:'1px solid black',borderRadius:'25px'}}
-                                    rows={2}
-                                    placeholder="Write a comment......."
-                                    variant="outlined"
-
-                                />
-                            
-                                
-                                      {
-                                          data ?
-                                          <div>
-                                             
-                                              <p>Name:{data.displayName} {data.email} {data.message}</p>
-                                          </div>
-                                          :<p>Please wait....</p>
-                                      }
-                                      
-                                        </div>
-                                    </CardContent>
-                                    </div>
-                            </Card>
-                        
-
+                            })}
+                        </div>
                     </Grid>
-                  
+
                     <Grid item sm={12} md={3} lg={3}>
                         <Paper style={{ height: 'auto', padding: '20px' }}>
                             hello
@@ -129,3 +138,12 @@ export default class MyPost extends Component {
         )
     }
 }
+
+
+export default connect(state => ({
+    user: state.get('auth').user,
+    myposts: state.get('posts').myposts
+})
+    , dispatch => ({
+        postsReducer: postsReducer.getActions(dispatch)
+    }))(MyPost)

@@ -34,7 +34,7 @@ class Header extends Component {
     render() {
         const {user}=this.props
         return (
-            <header style={{position:'fixed' , width:'100%'}}>
+            <header style={{position:'fixed' , width:'100%' ,zIndex:"11111"}}>
                 <nav>
                     <div className='humburger'>
                         <div className='line'></div>
