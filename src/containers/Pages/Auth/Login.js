@@ -33,7 +33,7 @@ class Login extends Component {
             email,password
         }=this.state
         return (
-            <div className="login">
+            <div>
                 <LoginForm
                 email={email}
                 password={password}

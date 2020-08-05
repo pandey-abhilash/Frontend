@@ -5,7 +5,7 @@ import '../../../styles/resetpassword.css';
 export default class ResetPassword extends Component {
     render() {
         return (
-            <div className='reset'>
+            <div>
                 <ResetPasswordForm/>
             </div>
         )

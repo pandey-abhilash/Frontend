@@ -7,6 +7,7 @@ import {
 import moment from 'moment'
 import { MoreVert, ExpandMore, Favorite, Share, Comment } from '@material-ui/icons/';
 import '../../styles/common.css'
+
 // import postsReducer from '../../../redux/actions/post';
 
 class MyPostCard extends Component {
