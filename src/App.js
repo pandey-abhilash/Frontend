@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ApplicationRouter from './containers/Pages/Application/ApplicationRouter';
 import AuthRouter from './containers/Pages/Auth/AuthRouter';
 import './styles/toastr.css';
+import './styles/common.css';
 import { connect } from "react-redux";
 import userReducer from './redux/actions/auth'
 
@@ -16,7 +17,7 @@ class App extends Component {
     
     myproject=JSON.parse(myproject)
     if(myproject && myproject.email && myproject.password){
-      userReducer.loginUser({
+      userReducer.authCheckUser({
         email:myproject.email,
         password:myproject.password
       })
@@ -24,12 +25,10 @@ class App extends Component {
   }
   render() {
     const {user}=this.props
-    
-    //let user = true;
     if(user){
-      return <div id="app"><ApplicationRouter/></div>
+      return<ApplicationRouter/>
     }
-    return<div style={{margin:'10px'}}  id="app"> <AuthRouter/></div>
+    return<AuthRouter/>
   }
 }
 

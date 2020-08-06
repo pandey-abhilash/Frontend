@@ -58,6 +58,25 @@ reducerFactory.addAction('LOGIN_USERS', 'loginUser',
     return newState;
   }
 );
+reducerFactory.addAction('AUTH_CHECK_USERS', 'authCheckUser',
+  async (body) => {
+    const response= await authAPI.loginUser(body);
+    return response.data
+  },
+   (state, action) => {
+    if(action.data.success){
+      const{email,password}=action.data.data 
+      window.localStorage.setItem("myproject",JSON.stringify({email,password}));
+      state.user=action.data.data
+      state.loggin = true;
+    }else{
+        state.loggin=false
+    } 
+    const newState = Object.assign({}, state);
+    newState.loading = false;
+    return newState;
+  }
+);
 
 
 

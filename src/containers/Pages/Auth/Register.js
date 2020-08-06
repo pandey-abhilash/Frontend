@@ -47,7 +47,7 @@ class Register extends Component {
     render() {
         const {email, password, confirmPassword,displayName, phone }= this.state;
         return (
-            <div>
+            <div className='authPage'>
                 <RegisterForm
                     onSubmit={this.onSubmit}
                     onSetState={this.onSetState}
@@ -57,7 +57,7 @@ class Register extends Component {
                     confirmPassword={confirmPassword}
                     displayName={displayName}
                 />
-            </div>
+                </div>
         )
     }
 }

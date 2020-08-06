@@ -11,9 +11,9 @@ class AuthRouter extends Component {
             <Router>
                 <Switch>
                     <Route path="/" exact component={Login}/>
-                    <Route path="/register/" exact component={Register}/>
-                    <Route path="/reset/pass/" exact component={ResetPassword}/>
-                    <Route path="/forget/pass/" exact component={ForgetPassword}/>
+                    <Route path="/register" exact component={Register}/>
+                    <Route path="/reset/pass" exact component={ResetPassword}/>
+                    <Route path="/forget/pass" exact component={ForgetPassword}/>
                     <Redirect to='/'/>
             </Switch>
             </Router>

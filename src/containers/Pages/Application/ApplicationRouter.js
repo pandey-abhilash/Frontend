@@ -9,7 +9,7 @@ import MyPost from '../MyPost/MyPost';
 class ApplicationRouter extends Component {
     render() {
         return (
-            <section style={{ padding: '0px', margin: '0px', boxSizing: 'border-box' }}>
+            <section  className='applicationPage' style={{ padding: '0px', margin: '0px', boxSizing: 'border-box' }}>
                 <Router>
                     <Headers />
                     <Switch>

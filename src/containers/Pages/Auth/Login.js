@@ -33,14 +33,13 @@ class Login extends Component {
             email,password
         }=this.state
         return (
-            <div>
-                <LoginForm
+            <div className='authPage'>
+            <LoginForm
                 email={email}
                 password={password}
                 onSubmit={this.onSubmit}
                 onSetState={this.onSetState}
                 />
-                
             </div>
         )
     }

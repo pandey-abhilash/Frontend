@@ -5,7 +5,7 @@ import '../../../styles/forgetpassword.css';
 export default class ForgetPassword extends Component {
     render() {
         return (
-            <div>
+            <div className='authPage' >
                 <ForgetPasswordForm/>
             </div>
         )

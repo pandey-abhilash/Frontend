@@ -33,53 +33,57 @@ class LoginForm extends Component {
     render() {
         const { email, password, onSubmit } = this.props
         return (
-           
-            <Card variant="outlined" 
-            style={{ width: '520px',
-             padding: "20px", margin: "auto", 
-             position: "relative", top: "250px"
-             }}>
-                <div style={{marginLeft:"45%"}}>Login</div>
-                <Divider style={{marginTop:"10px"}}/>
-                     <div style={{marginTop:"35px",marginLeft:"30px"}}>
-                                <TextField
-                                    label="EmailId*"
-                                    variant="outlined"
-                                    style={{ width: "90%" ,marginTop:"10px"}}
-                                    onChange={this.onChangeUsername}
-                                    value={email}
+            <div style={{padding:'20px'}}>
+            <Card variant="outlined"
+                style={{
+                    left: '50%',
+                    top: '50%',
+                    width:'350px',
+                    position: 'absolute',
+                    '-webkit-transform': 'translate3d(-50%, -50%, 0)',
+                    '-moz-transform': 'translate3d(-50%, -50%, 0)',
+                    'transform': 'translate3d(-50%, -50%, 0)'
+                }}>
+                <form >
+                    <div style={{ textAlign: "center", fontSize: "20px", paddingTop: "10px", fontWeight: "600" }}>User Login</div>
+                    <Divider style={{ marginTop: "10px", fontSize: "20px" }} />
+                    <div style={{ padding: '20px' }}>
+                        <TextField
+                            label="Email-Id*"
+                            variant="outlined"
+                            style={{ width: "100%" }}
+                            onChange={this.onChangeUsername}
+                            value={email}
 
-                                />
-
-                                <TextField
-                                    label="Password*"
-                                    type="password"
-                                    autoComplete="current-password"
-                                    variant="outlined"
-                                    style={{  width: '90%' ,marginTop:"30px"}}
-                                    onChange={this.onChangePassword}
-                                    value={password}
-                                />
-                         </div>
-                            <div className="form-action" style={{ paddingLeft: '0px' ,marginTop: "40px"}}>
-                                <Button style={{marginLeft:"70px"}} variant="contained"
-                                    color="primary"
-                                    size="medium"
-                                    startIcon={<SaveIcon />} onClick={(e) => onSubmit(e)}>Login</Button>
-                        <Button style={{marginLeft:"90px"}} variant="contained"
-                                    color="primary"
-                                    size="medium"
-                                    startIcon={<SaveIcon />} onClick={() => history.push('/register/')}> Sign Up</Button>
-
-                            </div>
-                            <div className="login-link" style={{ paddingLeft: '0px',marginTop: "40px" }}>
-                                <div style={{ paddingLeft: '0px' }}><Link to='/forget/pass/'>Forget Password ?</Link></div>
-                                <div style={{ paddingLeft: '0px'}}><Link to='/reset/pass/'>Reset Password ?</Link></div>
-                            </div>
-                        
-                    
-                            </Card>
-        
+                        />
+                        <TextField
+                            label="Password*"
+                            type="password"
+                            autoComplete="current-password"
+                            variant="outlined"
+                            style={{ width: '100%', marginTop: "30px" }}
+                            onChange={this.onChangePassword}
+                            value={password}
+                        />
+                        <div className="login-link" style={{ paddingLeft: '0px', marginTop: "15px" }}>
+                            <div ><Link to='/forget/pass'>Forget Password ?</Link></div>
+                            <div ><Link to='/register'>Create New Account ?</Link></div>
+                        </div>
+                        <div style={{ marginTop: "20px", display: 'flex', justifyContent: 'center' }}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                size="medium"
+                                startIcon={<SaveIcon />}
+                                onClick={(e) => onSubmit(e)}
+                            >
+                                Login
+                     </Button>
+                        </div>
+                    </div>
+                </form>
+            </Card>
+            </div>
         )
     }
 }
