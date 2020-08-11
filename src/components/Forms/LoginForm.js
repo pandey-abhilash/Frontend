@@ -40,8 +40,6 @@ class LoginForm extends Component {
                     top: '50%',
                     width:'350px',
                     position: 'absolute',
-                    '-webkit-transform': 'translate3d(-50%, -50%, 0)',
-                    '-moz-transform': 'translate3d(-50%, -50%, 0)',
                     'transform': 'translate3d(-50%, -50%, 0)'
                 }}>
                 <form >

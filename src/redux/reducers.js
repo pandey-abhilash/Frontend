@@ -5,8 +5,9 @@ import { reducer as form } from 'redux-form/immutable';
 import { combineReducers } from 'redux-immutable';
 import { connectRouter } from 'connected-react-router/immutable';
 import history from '../utils/history';
-import auth from '../redux/actions/auth'
-import posts from '../redux/actions/post';
+import auth from '../redux/actions/authReducer'
+import posts from '../redux/actions/postReducer';
+import comments from '../redux/actions/commentReducer';
 /**
  * Creates the main reducer with the dynamically injected ones
  */
@@ -15,6 +16,7 @@ export default function createReducer(injectedReducers = {}) {
     form,
     auth: auth.getReducer(),
     posts: posts.getReducer(),
+    comments: comments.getReducer(),
     router: connectRouter(history),
     ...injectedReducers,
   });

@@ -17,8 +17,6 @@ export default class ForgetPasswordForm extends Component {
                 top: '50%',
                 width:'350px',
                 position: 'absolute',
-                '-webkit-transform': 'translate3d(-50%, -50%, 0)',
-                '-moz-transform': 'translate3d(-50%, -50%, 0)',
                 'transform': 'translate3d(-50%, -50%, 0)'
                  }}>
                 <div style={{ textAlign: "center", fontSize: "20px", paddingTop: "10px", fontWeight: "600" }}>

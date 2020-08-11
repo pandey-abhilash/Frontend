@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import toastr from 'toastr';
 import RegisterForm from '../../../components/Forms/RegisterForm'
 import '../../../styles/register.css'
-import userRedcuer from '../../../redux/actions/auth'
+import userRedcuer from '../../../redux/actions/authReducer'
 class Register extends Component {
     constructor(props){
         super(props)

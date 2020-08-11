@@ -2,7 +2,7 @@
 import React ,{Component} from 'react'
 import { Dialog, DialogTitle, DialogContent, Button, DialogActions } from '@material-ui/core/';
 import {connect} from 'react-redux'
-import userReducer from '../../redux/actions/auth'
+import userReducer from '../../redux/actions/authReducer'
 
 import Slide from '@material-ui/core/Slide';
 import { EditProfileForm } from '../Forms/EditProfileForm'

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {connect} from 'react-redux'
-import userReducer from '../../../redux/actions/auth'
+import userReducer from '../../../redux/actions/authReducer'
 
 class Header extends Component {
 
@@ -27,6 +27,16 @@ class Header extends Component {
             });
         })
     }
+    onClickMenu = ()=> {
+        const humburger = document.querySelector(".humburger");
+        const navLinks = document.querySelector(".nav-links")
+        const links = document.querySelectorAll(".nav-links li")
+        humburger.addEventListener("click", () => {
+            links.forEach(link => {
+                link.classList.toggle("fade")
+            });
+        })
+    }
     logout(){
         window.localStorage.setItem("myproject",null)
         window.location.reload()    
@@ -42,8 +52,8 @@ class Header extends Component {
                         <div className='line'></div>
                     </div>
                     <ul className='nav-links'>
-                        <li>
-                            <Link to="/app">Home</Link>
+                        <li >
+                            <Link to="/app" >Home</Link>
                         </li>
                         <li>
                             <Link to="/app/post">My Post</Link>

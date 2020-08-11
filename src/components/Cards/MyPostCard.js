@@ -5,8 +5,13 @@ import {
     CardHeader, Card, Icon, IconButton, Avatar, CardActions, TextField
 } from '@material-ui/core'
 import moment from 'moment'
+import toastr from 'toastr';
 import { MoreVert, ExpandMore, Favorite, Share, Comment } from '@material-ui/icons/';
 import '../../styles/common.css'
+import commentReducer from '../../redux/actions/commentReducer';
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import BackspaceIcon from '@material-ui/icons/Backspace';
+import CommentCard from './CommentCard';
 
 // import postsReducer from '../../../redux/actions/post';
 
@@ -14,90 +19,161 @@ class MyPostCard extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            expanded: false
+            expanded: false,
+            commentMessage: ''
+        }
+        this.onChangeComment = this.onChangeComment.bind(this)
+        this.addComment = this.addComment.bind(this);
+        this.fetchPostComments = this.fetchPostComments
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(this.props!==nextProps){
+            this.props=nextProps
         }
     }
+
+    componentDidMount() {
+        // this.fetchPostComments()
+
+    }
+
+    onChangeComment(e) {
+        this.setState({ commentMessage: e.target.value })
+    }
+
+    fetchPostComments() {
+        const { post, commentReducer } = this.props;
+        if(!this.state.expanded){
+            commentReducer.fetchComments({ postId: post.postId }).then(res=>{
+                if(res.data.success){
+                    this.setState({expanded:!this.state.expanded});
+                }
+            })
+        }else{
+            this.setState({expanded:!this.state.expanded});
+        }
+    }
+
+    addComment() {
+        const { post, onSubmitComment } = this.props
+        const { commentMessage } = this.state;
+        if (!commentMessage && commentMessage.length === 0) {
+            return toastr.warning("Please enter comment to add.")
+        }
+        onSubmitComment(post.postId, commentMessage)
+        this.setState({ commentMessage: '' });
+    }
+
+
+
     render() {
-        const { post } = this.props
+        const { post, onAddLike, user, comments } = this.props
+        const { commentMessage } = this.state;
+        const _checkLiked = (post) => {
+            if (post.likes.filter(l => l.email === user.email).length > 0) {
+                return false
+            }
+            return true
+        }
+        const _checkMyComment = (post) => {
+            if (post.likes.filter(l => l.email === user.email).length > 0) {
+                return true
+            }
+            return false
+        }
         return (
             <div>
-                <Card
-                    style={{ padding: "20px", marginBottom: '20px' }}
-                >
+                <Card style={{ padding: "20px 20px 0px 20px", marginBottom: '20px' }}>
                     <CardHeader
-                        avatar={
-                            <Avatar aria-label="recipe" style={{ textTransform: 'capitalize' }}>
-                                {post.displayName ? post.displayName[0] : 'N/A'}
-                            </Avatar>
-                        }
-                        action={
-                            <IconButton aria-label="settings">
-                                <MoreVert />
-                            </IconButton>
-                        }
+                        avatar={<Avatar aria-label="recipe" style={{ textTransform: 'capitalize', backgroundColor:"green" }}>{post.displayName ? post.displayName[0] : 'N/A'}</Avatar>}
+                        action={<IconButton aria-label="settings"><MoreVert /></IconButton>}
                         title={post.displayName}
                         subheader={moment(post.createdAt).format('llll')}
                     />
                     <CardContent>
-                        <Typography variant="subtitle2" color="textSecondary" component="p">
-                            {post.message}
-                        </Typography>
+                        <Typography variant="subtitle2" color="textSecondary" component="p">{post.message}</Typography>
                     </CardContent>
                     <Divider />
                     <CardActions disableSpacing>
-                        <div style={{
-                            display: 'flex',
-                            'width': '100%',
-                            'alignContent': 'space-between'
-
-                        }}>
-                            <div style={{ flex: 1 }}>
-                                <IconButton className="likes" style={{ padding: '5px' }}>
+                        <div style={{ display: 'flex', fontSize: '12px', 'width': '100%', 'alignContent': 'space-between' }}>
+                            <div style={{ flex: 1 }}><span>{post.likeCount} likes</span></div>
+                            <div><span>{post.commentCount} Comment</span></div>
+                        </div>
+                    </CardActions>
+                    <Divider />
+                    <CardActions disableSpacing>
+                        <div style={{ display: 'flex', fontSize: '14px', 'width': '100%', justifyContent: 'center' }}>
+                            <div style={{ textAlign: "center", flexGrow: 1 }}>
+                                {_checkLiked(post, user) && <IconButton className="likes" style={{ padding: '5px' }} onClick={(e) => onAddLike(post.postId)} >
                                     <Favorite />
-                                </IconButton>
-                                <span>{post.likesCount} likes</span>
+                                </IconButton>}
+                                {!_checkLiked(post, user) && <IconButton style={{ padding: '5px', color: 'red' }}>
+                                    <Favorite />
+                                </IconButton>}
+                                <span> Like</span>
                             </div>
-                            <div>
+                            <div style={{ textAlign: "center", flexGrow: 1 }}>
                                 <IconButton
-                                    className="likes"
+                                    className="comment"
                                     style={{ padding: '5px' }}
-                                    onClick={() => this.setState({ expanded: !this.state.expanded })}
+                                    onClick={() => this.fetchPostComments()}
                                 >
                                     <Comment />
                                 </IconButton>
-                                <span>{post.commentsCount} Comment</span>
+                                <span>Comment</span>
                             </div>
                         </div>
                     </CardActions>
                     <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                         <Divider />
-                        <CardContent style={{ fontSize: "12px" }}>
-                            <Typography paragraph>Add Comments:</Typography>
-                            <Typography paragraph>
-                                <TextField style={{ width: '100%' }} />
-                                <div style={{ width: '100%' }}>
-                                    <Button
-                                        variant="contained"
-                                        size="small"
-                                        color="primary"
-                                        style={{ margin: "3px", textAlign: "end" }}
-                                    >Add
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        size="small"
-                                        color="secondary"
-                                        onClick={()=>this.setState({expanded:false })}
-                                        style={{ margin: "3px", textAlign: "end" }}
-                                    >
-                                        Discard
-                                    </Button>
+                        <CardContent style={{ fontSize: "12px", padding: '10px 0px 0px 0px' }}>
+                            <div style={{ width: '100%'}}>
+                                {comments[post.postId] && comments[post.postId].length > 0 && comments[post.postId].map(comment =>{
+                                    return <CommentCard
+                                    key={comment.commentId}
+                                    comment={comment}
+                                    />
+                                })}
+                            </div>
+                        </CardContent>
+                        <CardContent style={{ fontSize: "12px", padding: '10px 0px 0px 0px' }}>
+                            <div style={{ width: '100%', display: 'flex', alignContent: 'space-between' }}>
+                                <div style={{ flexGrow: 1, padding: "5px 0px 10px 0px" }}>
+                                    <TextField
+                                        style={{ width: '100%' }}
+                                        inputProps={{
+                                            style: { padding: '8px', marginTop: '5px', }
+                                        }}
+                                        variant="standard"
+                                        value={commentMessage}
+                                        placeholder="write a comment..."
+                                        onChange={(e) => this.onChangeComment(e)}
+                                    />
                                 </div>
-                            </Typography>
+                                <div style={{ textAlign: "inline", flexGrow: 0, padding: "10px 0px 10px 10px" }}>
+                                    <IconButton
+                                        style={{ padding: '5px' }}
+                                        className="iconbtn"
+                                        color="primary" 
+                                        onClick={(e) => this.addComment(e)}
+                                    >
+                                        <PostAddIcon />
+                                    </IconButton>
+                                    <IconButton
+                                        style={{ padding: '5px' }}
+                                        className="iconbtn"
+                                        color="secondary" 
+                                        variant="outlined"
+                                        onClick={() => this.setState({ expanded: false })}
+                                    >
+                                        <BackspaceIcon />
+                                    </IconButton>
+                                </div>
+                            </div>
                         </CardContent>
                     </Collapse>
                 </Card>
-
             </div>
         )
     }
@@ -105,7 +181,10 @@ class MyPostCard extends Component {
 
 export default connect(
     state => ({
-        user: state.get('auth').user
+        user: state.get('auth').user,
+        comments: state.get('comments').comments
     }),
-    dispatch => ({})
+    dispatch => ({
+        commentReducer: commentReducer.getActions(dispatch)
+    })
 )(MyPostCard)

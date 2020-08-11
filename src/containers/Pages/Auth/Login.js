@@ -3,7 +3,7 @@ import LoginForm from '../../../components/Forms/LoginForm';
 import '../../../styles/login.css';
 import toastr from 'toastr' 
 import {connect} from 'react-redux'
-import userReducer from '../../../redux/actions/auth'
+import userReducer from '../../../redux/actions/authReducer'
 
 class Login extends Component {
     constructor(props){ //dynamic 

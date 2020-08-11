@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Grid, Card, Typography, CardContent, Divider } from '@material-ui/core';
 import {ProfileBasicDetail} from './ProfileBasicDetail'
 import {connect} from 'react-redux'
-import userReducer from '../../redux/actions/auth'
+import userReducer from '../../redux/actions/authReducer'
 
 class ProfileAbout extends Component {
     constructor(props) {
@@ -19,7 +19,7 @@ class ProfileAbout extends Component {
                         alignContent="center"
                         spacing={2}
                     >
-                        <Grid item sm={12} md={4} lg={4}>
+                        {/* <Grid item sm={12}  xs={12} md={4} lg={4}>
                             <Card className="card">
                                 <div style={{ padding: '10px' }}>
                                     <div className="heading">
@@ -31,25 +31,22 @@ class ProfileAbout extends Component {
                                     </CardContent>
                                 </div>
                             </Card>
-                        </Grid>
-                        <Grid item sm={12} md={8} lg={8}>
+                        </Grid> */}
+                        <Grid item sm={12} xs={12} md={8} lg={8}>
                             <Card className="card" style={{ width: '100%' }}>
                                 <div style={{ padding: '10px' }}>
-                                    <div className="heading">
-                                        <Typography variant="h5">Basic Details</Typography>
+                                    <div >
+                                        <Typography variant="h5" color="primary">Basic Details</Typography>
                                     </div>
                                     <Divider />
                                     <CardContent>
                                         <div>
                                             <ProfileBasicDetail user={this.props.user}/>
-
-                                   
                                         </div>
                                     </CardContent>
                                 </div>
                             </Card>
                         </Grid>
-
                     </Grid>
                 </div>
             </section>

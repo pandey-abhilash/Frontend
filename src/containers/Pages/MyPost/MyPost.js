@@ -8,7 +8,7 @@ import {
 import toastr from 'toastr';
 import moment from 'moment'
 import { MoreVert, ExpandMore, Favorite, Share, CreateNewFolder } from '@material-ui/icons/';
-import postsReducer from '../../../redux/actions/post';
+import postsReducer from '../../../redux/actions/postReducer';
 import MyPostCard from '../../../components/Cards/MyPostCard';
 
 class MyPost extends Component {
@@ -18,11 +18,13 @@ class MyPost extends Component {
             data: false,
             pageNumber: 0,
             pageSize: 10,
-            message: null,
-            expanded: false
+            message: '',
+            expanded: false,
         }
         this.onGetMyPosts = this.onGetMyPosts.bind(this);
         this.onCreatePosts = this.onCreatePosts.bind(this);
+        this.onSubmitComment = this.onSubmitComment.bind(this);
+        this.onAddLike = this.onAddLike.bind(this)
     }
     componentDidMount() {
         this.onGetMyPosts();
@@ -43,12 +45,12 @@ class MyPost extends Component {
             images: [],
             tags: [],
             shares: [],
-            likesCount: 0,
-            commentsCount: 0,
+            likeCount: 0,
+            commentCount: 0,
         }
         postsReducer.createPosts(data).then(res => {
             if (res.success) {
-                this.setState({ message: null }, () => {
+                this.setState({ message: '' }, () => {
                     this.onGetMyPosts();
                 })
             }
@@ -64,24 +66,61 @@ class MyPost extends Component {
             pageSize
         });
     }
+
+    // On click like icons from child component MyPostCard 
+    onAddLike(postId) {
+        const { postsReducer, user, myposts } = this.props
+        let findPost = myposts.filter(p => p.postId === postId);
+        if (findPost.length > 0) {
+            let checkLikeExits = findPost[0].likes.filter(l => l.email === user.email);
+            if (checkLikeExits.length > 0) {
+                return
+            }
+        }
+        postsReducer.likePost({
+            postId,
+            likesBy: { email: user.email, displayName: user.displayName,likeAt: Date.now()}
+        }).then(res => {
+            if (res.success) {
+                this.onGetMyPosts()
+            }
+        })
+    }
+    // On submit to add comments from child component MyPostCard 
+    onSubmitComment(postId, commentMessage) {
+        const { postsReducer, user } = this.props;
+        postsReducer.commentPost({
+            postId,
+            commentBy: {
+                email: user.email, displayName: user.displayName, commentMessage,
+            }
+        }).then(res => {
+            if (res.success) {
+                this.onGetMyPosts()
+            }
+        })
+    }
+
     render() {
         const data = this.state.data;
         const { myposts } = this.props
         return (
             <div className='profile'>
                 <Grid container justify="space-between" >
-                    <Grid item sm={12} md={2} lg={2}>
+
+                    <Grid item sm={12} xs={12} md={2} lg={2}>
                         <Paper style={{ height: 'auto', padding: '20px' }}>
                             <Typography>dddd</Typography>
                         </Paper>
                     </Grid>
+
                     <Grid item sm={12} md={6} lg={6}>
-                        <Paper style={{ padding: '20px' }}>
-                        <IconButton
-                                    style={{ padding: '5px', color: "#5b78c7", cursor:"none" }}
-                                >
-                                    <CreateNewFolder/>
-                                </IconButton>
+                        <Paper style={{ padding: '20px', boxShadow:'none' }}>
+                            <IconButton
+                                style={{ padding: '5px', color: "#5b78c7", cursor: "none" }}
+                            >
+                                <CreateNewFolder />
+                            </IconButton>
                             <Typography variant="button" style={{ paddingLeft: "5px", color: "#5b78c7" }} gutterBottom>
                                 Post something in your mind.
                                 </Typography>
@@ -108,7 +147,7 @@ class MyPost extends Component {
                                             </Button>
                                     <Button
                                         variant="contained"
-                                        color="primary"
+                                        color="secondary"
                                         style={{ marginLeft: "5px" }}
                                     >
                                         Add Photo
@@ -120,19 +159,23 @@ class MyPost extends Component {
                             </div>
                         </Paper>
                         <div style={{ paddingTop: '20px' }}>
-                            {myposts.length > 0 && myposts.map(post => {
-                                return <MyPostCard
+                            {myposts.length > 0 && myposts.map(post => (
+                                <MyPostCard
+                                    key={post.postId}
                                     post={post}
+                                    onAddLike={this.onAddLike}
+                                    onSubmitComment={this.onSubmitComment}
                                 />
-                            })}
+                            ))}
                         </div>
                     </Grid>
-
                     <Grid item sm={12} md={3} lg={3}>
                         <Paper style={{ height: 'auto', padding: '20px' }}>
-                            hello
+                            This section is user to display friends follower
                         </Paper>
                     </Grid>
+
+
                 </Grid>
             </div>
         )

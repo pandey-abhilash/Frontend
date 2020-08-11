@@ -4,7 +4,7 @@ import AuthRouter from './containers/Pages/Auth/AuthRouter';
 import './styles/toastr.css';
 import './styles/common.css';
 import { connect } from "react-redux";
-import userReducer from './redux/actions/auth'
+import userReducer from './redux/actions/authReducer'
 
 class App extends Component {
   constructor(props){

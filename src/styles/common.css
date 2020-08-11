@@ -10,7 +10,20 @@
     color: black;
 }
 .likes:hover{
-    color: cornflowerblue;
+    color: #f50057;
+}
+.comment{
+    color: black;
+}
+.comment:hover{
+    color: #177fbb;
+}
+.iconbtn{
+
+}
+.iconbtn:hover{
+    /* background-color: #177fbb; */
+    color: rgb(30, 107, 43);
 }
 .authPage{
     width: 100%;
