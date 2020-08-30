@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import history from '../../utils/history'
 // import config from '../../utils/config';
 import { Link } from 'react-router-dom';
+
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
-import Divider from '@material-ui/core/Divider'
-import Card from '@material-ui/core/Card';
-
+import { Grid, Typography, Avatar, FormControlLabel, Checkbox } from '@material-ui/core';
 
 class LoginForm extends Component {
     constructor(props) {
@@ -15,7 +15,6 @@ class LoginForm extends Component {
         this.state = {}
         this.onChangeUsername = this.onChangeUsername.bind(this)
         this.onChangePassword = this.onChangePassword.bind(this)
-
     }
 
     onChangeUsername(e) {
@@ -31,56 +30,66 @@ class LoginForm extends Component {
     }
 
     render() {
-        const { email, password, onSubmit } = this.props
+        const { email, password, onSubmit,classes } = this.props
         return (
-            <div style={{padding:'20px'}}>
-            <Card variant="outlined"
-                style={{
-                    left: '50%',
-                    top: '50%',
-                    width:'350px',
-                    position: 'absolute',
-                    'transform': 'translate3d(-50%, -50%, 0)'
-                }}>
-                <form >
-                    <div style={{ textAlign: "center", fontSize: "20px", paddingTop: "10px", fontWeight: "600" }}>User Login</div>
-                    <Divider style={{ marginTop: "10px", fontSize: "20px" }} />
-                    <div style={{ padding: '20px' }}>
-                        <TextField
-                            label="Email-Id*"
-                            variant="outlined"
-                            style={{ width: "100%" }}
-                            onChange={this.onChangeUsername}
-                            value={email}
-
-                        />
-                        <TextField
-                            label="Password*"
-                            type="password"
-                            autoComplete="current-password"
-                            variant="outlined"
-                            style={{ width: '100%', marginTop: "30px" }}
-                            onChange={this.onChangePassword}
-                            value={password}
-                        />
-                        <div className="login-link" style={{ paddingLeft: '0px', marginTop: "15px" }}>
-                            <div ><Link to='/forget/pass'>Forget Password ?</Link></div>
-                            <div ><Link to='/register'>Create New Account ?</Link></div>
-                        </div>
-                        <div style={{ marginTop: "20px", display: 'flex', justifyContent: 'center' }}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                size="medium"
-                                startIcon={<SaveIcon />}
-                                onClick={(e) => onSubmit(e)}
-                            >
-                                Login
-                     </Button>
-                        </div>
-                    </div>
+            <div style={{ display:"flex", flexDirection: 'column', alignItems: 'center' }}>
+                <Avatar className={classes.avatar}>
+                    <LockOutlinedIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    Sign in
+          </Typography>
+                <form className={classes.form} noValidate>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        value={email}
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                        onChange={this.onChangeUsername}
+                    />
+                    <TextField
+                        variant="outlined"
+                        value={password}
+                        margin="normal"
+                        onChange={this.onChangePassword}
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        autoComplete="current-password"
+                    />
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        startIcon={<SaveIcon />}
+                        onClick={(e) => onSubmit(e)}
+                        className={classes.submit}
+                    >
+                        Sign In
+            </Button>
+                    <Grid container>
+                        <Grid item xs>
+                            <Link to='/forget/pass'>
+                            <span style={{fontSize:"12px"}}>   Forgot password?</span>
+                </Link>
+                        </Grid>
+                        <Grid item>
+                            <Link to='/register'>
+                                <span style={{fontSize:"12px"}}>{"Don't have an account? Sign Up"}</span>
+                            </Link>
+                        </Grid>
+                    </Grid>
                 </form>
-            </Card>
             </div>
         )
     }
