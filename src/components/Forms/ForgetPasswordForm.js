@@ -3,45 +3,60 @@ import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
-import Divider from '@material-ui/core/Divider'
-import Card from '@material-ui/core/Card';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
 
 export default class ForgetPasswordForm extends Component {
     render() {
+        const {classes,email}= this.props;
         return (
-            <div style={{padding:"20px"}}>
-            <Card 
-            variant="outlined" 
-            style={{
-                left: '50%',
-                top: '50%',
-                width:'350px',
-                position: 'absolute',
-                'transform': 'translate3d(-50%, -50%, 0)'
-                 }}>
-                <div style={{ textAlign: "center", fontSize: "20px", paddingTop: "10px", fontWeight: "600" }}>
-                    Forget Password
-                </div>
-                <Divider style={{ marginTop: "10px" }} />
-                <div style={{ padding: "20px" }}>
+            <div style={{ display:"flex", flexDirection: 'column', alignItems: 'center' }}>
+                                <Avatar className={classes.avatar}>
+                    <LockOutlinedIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    Sign in
+          </Typography>
+                <form className={classes.form} noValidate>
                     <TextField
-                        label="Email Id*"
-                        type="email"
                         variant="outlined"
-                        style={{ width: "100%"}}
+                        margin="normal"
+                        required
+                        value={email}
+                        fullWidth
+                        id="email"
+                        label="Email Id"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                        onChange={this.onChangeUsername}
                     />
-                    <div className="login-link" style={{marginTop: "15px" }}>
-                        <div ><Link to='/'>Already have account ?</Link></div>
-                        <div ><Link to='/register/'>Create new account ?</Link></div>
-                    </div>
-                    <div style={{ paddingLeft: '0px', marginTop: "20px", display: 'flex', justifyContent: 'center' }}>
-                        <Button variant="contained"
-                            color="primary"
-                            size="medium"
-                            startIcon={<SaveIcon />} >Send</Button>
-                    </div>
-                </div>
-            </Card>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        startIcon={<SaveIcon />}
+                        onClick={(e) => {} }
+                        className={classes.submit}
+                    >
+                        Send Mail
+            </Button>
+                    <Grid container>
+                        <Grid item xs>
+                        <Link to='/'>
+                            <span style={{fontSize:"12px"}}> Click to Login ?</span>
+                </Link>
+                        </Grid>
+                        <Grid item>
+                        <Link to='/register/'>
+                                <span style={{fontSize:"12px"}}>{"Don't have an account ? Sign Up"}</span>
+                            </Link>
+                        </Grid>
+                    </Grid>
+                </form>
             </div>
         )
     }

@@ -47,7 +47,7 @@ export default class RegisterForm extends Component {
                         value={email}
                         fullWidth
                         id="email"
-                        label="Email Address"
+                        label="Email Id"
                         name="email"
                         autoComplete="email"
                         autoFocus
