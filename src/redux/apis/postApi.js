@@ -10,6 +10,13 @@ export async function fetchPosts(params){
     return axios.get(`${config.backendUrl}/posts/list/${params.email}/${params.pageNumber}/${params.pageSize}`)
 }
 
+export async function fetchAllPosts(params){
+    console.log(params)
+    console.log(params.pageNumber)
+    //console.log(params.email)
+    return axios.get(`${config.backendUrl}/posts/app/list/${params.pageNumber}/${params.pageSize}`)
+}
+
 export async function likePost(body){
     return axios.put(`${config.backendUrl}/posts/likes`,body)
 }

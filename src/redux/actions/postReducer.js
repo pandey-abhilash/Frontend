@@ -8,6 +8,7 @@ const initialState = {
     error: null,
     loading: false,
     myposts:[],
+    myallpost:[],
     totalPosts:0
 };
 
@@ -89,6 +90,24 @@ reducerFactory.addAction('COMMENT_POSTS', 'commentPost',
   }
 );
 
+reducerFactory.addAction('MY_All_POSTS', 'fetchAllPosts',
+  async (body) => {
+      console.log(body)
+    const response= await postAPI.fetchAllPosts(body);
+    return response.data
+  },
+   (state, action) => {
+     //debugger
+     if(action.data.success){
+       state.myallpost= action.data.data
+     }else{
+      toastr.error(action.data.message)
+     }
+     state.loading=false
+    const newState = Object.assign({}, state);
+    return newState;
+  }
+);
 
 
 

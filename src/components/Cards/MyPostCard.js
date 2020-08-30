@@ -12,7 +12,10 @@ import commentReducer from '../../redux/actions/commentReducer';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import BackspaceIcon from '@material-ui/icons/Backspace';
 import CommentCard from './CommentCard';
-
+import {  Menu, MenuItem, Grid } from '@material-ui/core'
+import EditPost from '../Modals/EditPost'
+import HidePost from '../Modals/HidePost'
+import DeletePost from '../Modals/DeletePost'
 // import postsReducer from '../../../redux/actions/post';
 
 class MyPostCard extends Component {
@@ -20,11 +23,55 @@ class MyPostCard extends Component {
         super(props)
         this.state = {
             expanded: false,
-            commentMessage: ''
+            commentMessage: '',
+            openMenu: null,
+            openEdit: false,
+            openHide:false,
+            openDelete:false
         }
         this.onChangeComment = this.onChangeComment.bind(this)
         this.addComment = this.addComment.bind(this);
         this.fetchPostComments = this.fetchPostComments
+
+        this.openEditMenu = this.openEditMenu.bind(this)
+        this.handleOpenEdit = this.handleOpenEdit.bind(this)
+        this.handleOpenHide = this.handleOpenHide.bind(this)
+        this.handleOpenDelete = this.handleOpenDelete.bind(this)
+        this.handleClose = this.handleClose.bind(this)
+   
+    }
+
+    handleClose() {
+        this.setState({
+            openEdit: false,
+            openHide:false,
+            openDelete:false
+        })
+    }
+
+    handleOpenEdit() {
+        this.setState({
+            openEdit: true
+        })
+    }
+    handleOpenHide() {
+        this.setState({
+            openHide: true
+        })
+    }
+
+    handleOpenDelete() {
+        this.setState({
+            openDelete: true
+        })
+    }
+
+
+    openEditMenu(e) {
+        this.setState({
+            openMenu: e.currentTarget
+
+        })
     }
 
     componentWillReceiveProps(nextProps){
@@ -67,7 +114,10 @@ class MyPostCard extends Component {
 
 
 
+
+
     render() {
+        const { openMenu } = this.state
         const { post, onAddLike, user, comments } = this.props
         const { commentMessage } = this.state;
         const _checkLiked = (post) => {
@@ -87,7 +137,27 @@ class MyPostCard extends Component {
                 <Card style={{ padding: "20px 20px 0px 20px", marginBottom: '20px' }}>
                     <CardHeader
                         avatar={<Avatar aria-label="recipe" style={{ textTransform: 'capitalize', backgroundColor:"green" }}>{post.displayName ? post.displayName[0] : 'N/A'}</Avatar>}
-                        action={<IconButton aria-label="settings"><MoreVert /></IconButton>}
+                        action={
+                        <IconButton aria-label="settings">
+                            <MoreVert
+                            onClick={(e) => this.openEditMenu(e)}
+                            />
+                            <Menu
+                                id="simple-menu"
+                                anchorEl={openMenu}
+                                keepMounted
+                                open={Boolean(openMenu)}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'center',
+                                }}
+                                onClose={() => this.setState({ openMenu: null })}
+                            >
+                                <MenuItem onClick={this.handleOpenEdit}>Edit</MenuItem>
+                                <MenuItem onClick={this.handleOpenHide}>Hide </MenuItem>
+                                <MenuItem onClick={this.handleOpenDelete}>Delete </MenuItem>
+                            </Menu>
+                            </IconButton>}
                         title={post.displayName}
                         subheader={moment(post.createdAt).format('llll')}
                     />
@@ -170,9 +240,30 @@ class MyPostCard extends Component {
                                         <BackspaceIcon />
                                     </IconButton>
                                 </div>
+                                
                             </div>
+                            
                         </CardContent>
+                        
                     </Collapse>
+                    <div>
+                                <EditPost
+                                open={this.state.openEdit}
+                                handleClose={this.handleClose}
+                                />
+                            </div>
+                            <div>
+                                <HidePost
+                                open={this.state.openHide}
+                                handleClose={this.handleClose}
+                                />
+                            </div>
+                            <div>
+                                <DeletePost
+                                open={this.state.openDelete}
+                                handleClose={this.handleClose}
+                                />
+                            </div>
                 </Card>
             </div>
         )
