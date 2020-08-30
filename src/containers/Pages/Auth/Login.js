@@ -55,7 +55,6 @@ class Login extends React.Component{
     if(!email || !password){
         return toastr.warning("Please Enter Email and Password")
     }
-    console.log(email,password)
     userReducer.loginUser({email,password})
 }
 onSetState(value){

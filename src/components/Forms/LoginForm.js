@@ -67,13 +67,11 @@ class LoginForm extends Component {
                         autoComplete="current-password"
                     />
                     <Button
-                        type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                         startIcon={<SaveIcon />}
                         onClick={(e) => onSubmit(e)}
-                        className={classes.submit}
                     >
                         Sign In
             </Button>

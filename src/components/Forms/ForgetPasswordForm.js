@@ -17,7 +17,7 @@ export default class ForgetPasswordForm extends Component {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Forget Password
           </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
@@ -34,7 +34,6 @@ export default class ForgetPasswordForm extends Component {
                         onChange={this.onChangeUsername}
                     />
                     <Button
-                        type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
