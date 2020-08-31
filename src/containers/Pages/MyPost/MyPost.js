@@ -25,6 +25,7 @@ class MyPost extends Component {
         this.onCreatePosts = this.onCreatePosts.bind(this);
         this.onSubmitComment = this.onSubmitComment.bind(this);
         this.onAddLike = this.onAddLike.bind(this)
+        this.deleteUserPost=this.deleteUserPost.bind(this)
     }
     componentDidMount() {
         this.onGetMyPosts();
@@ -101,6 +102,12 @@ class MyPost extends Component {
         })
     }
 
+    deleteUserPost(postId){
+        const{postsReducer}=this.props
+        postsReducer.deletePost({postId})
+         
+    }
+
     render() {
         const data = this.state.data;
         const { myposts } = this.props
@@ -165,6 +172,7 @@ class MyPost extends Component {
                                     post={post}
                                     onAddLike={this.onAddLike}
                                     onSubmitComment={this.onSubmitComment}
+                                    deleteUserPost={this.deleteUserPost}
                                 />
                             ))}
                         </div>

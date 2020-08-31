@@ -109,7 +109,23 @@ reducerFactory.addAction('MY_All_POSTS', 'fetchAllPosts',
   }
 );
 
-
+reducerFactory.addAction('DELETE_POSTS', 'deletePost',
+  async (body) => {
+    console.log(body)
+    const response= await postAPI.deletePost(body);
+    return response.data
+  },
+   (state, action) => {
+     if(action.data.success){
+       toastr.success(action.data.message)
+     }else{
+      toastr.error(action.data.message)
+     }
+     state.loading=false
+    const newState = Object.assign({}, state);
+    return newState;
+  }
+);
 
 
 

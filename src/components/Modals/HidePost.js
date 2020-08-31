@@ -19,7 +19,7 @@ class HidePost extends Component{
         const { open, handleClose } = this.props
         return(
             <div>
-                <Dialog
+                <Dialog 
 
                             open={open}
                             TransitionComponent={Transition}

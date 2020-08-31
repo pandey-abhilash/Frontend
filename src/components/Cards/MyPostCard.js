@@ -38,6 +38,7 @@ class MyPostCard extends Component {
         this.handleOpenHide = this.handleOpenHide.bind(this)
         this.handleOpenDelete = this.handleOpenDelete.bind(this)
         this.handleClose = this.handleClose.bind(this)
+        this.deletePost=this.deletePost.bind(this)
    
     }
 
@@ -74,11 +75,11 @@ class MyPostCard extends Component {
         })
     }
 
-    componentWillReceiveProps(nextProps){
-        if(this.props!==nextProps){
-            this.props=nextProps
-        }
-    }
+    // componentWillReceiveProps(nextProps){
+    //     if(this.props!==nextProps){
+    //         this.props=nextProps
+    //     }
+    // }
 
     componentDidMount() {
         // this.fetchPostComments()
@@ -111,14 +112,22 @@ class MyPostCard extends Component {
         onSubmitComment(post.postId, commentMessage)
         this.setState({ commentMessage: '' });
     }
+    deletePost(){
+        const{post,deleteUserPost}=this.props
+        //debugger
+        deleteUserPost(post.postId)
+        
+    }
 
 
 
 
 
     render() {
+        console.log(this.props)
         const { openMenu } = this.state
         const { post, onAddLike, user, comments } = this.props
+        //console.log(user)
         const { commentMessage } = this.state;
         const _checkLiked = (post) => {
             if (post.likes.filter(l => l.email === user.email).length > 0) {
@@ -133,7 +142,7 @@ class MyPostCard extends Component {
             return false
         }
         return (
-            <div>
+            <div key={post.postId}>
                 <Card style={{ padding: "20px 20px 0px 20px", marginBottom: '20px' }}>
                     <CardHeader
                         avatar={<Avatar aria-label="recipe" style={{ textTransform: 'capitalize', backgroundColor:"green" }}>{post.displayName ? post.displayName[0] : 'N/A'}</Avatar>}
@@ -142,7 +151,8 @@ class MyPostCard extends Component {
                             <MoreVert
                             onClick={(e) => this.openEditMenu(e)}
                             />
-                            <Menu
+                           
+                                <Menu
                                 id="simple-menu"
                                 anchorEl={openMenu}
                                 keepMounted
@@ -152,11 +162,15 @@ class MyPostCard extends Component {
                                     horizontal: 'center',
                                 }}
                                 onClose={() => this.setState({ openMenu: null })}
-                            >
-                                <MenuItem onClick={this.handleOpenEdit}>Edit</MenuItem>
-                                <MenuItem onClick={this.handleOpenHide}>Hide </MenuItem>
-                                <MenuItem onClick={this.handleOpenDelete}>Delete </MenuItem>
+                            >             
+                             
+                            {user.email===post.email &&  <MenuItem onClick={this.handleOpenEdit}>Edit</MenuItem>} 
+                            {user.email===post.email && <MenuItem onClick={this.handleOpenDelete}>Delete </MenuItem>}
+                            <MenuItem onClick={this.handleOpenHide}>Hide </MenuItem>
+
+                                             
                             </Menu>
+                            
                             </IconButton>}
                         title={post.displayName}
                         subheader={moment(post.createdAt).format('llll')}
@@ -246,24 +260,28 @@ class MyPostCard extends Component {
                         </CardContent>
                         
                     </Collapse>
-                    <div>
-                                <EditPost
-                                open={this.state.openEdit}
-                                handleClose={this.handleClose}
-                                />
-                            </div>
+                    
                             <div>
-                                <HidePost
-                                open={this.state.openHide}
-                                handleClose={this.handleClose}
-                                />
-                            </div>
-                            <div>
-                                <DeletePost
-                                open={this.state.openDelete}
-                                handleClose={this.handleClose}
-                                />
-                            </div>
+                            <EditPost
+                            open={this.state.openEdit}
+                            handleClose={this.handleClose}
+                            />
+                        </div>
+                        <div>
+                            <HidePost
+                            open={this.state.openHide}
+                            handleClose={this.handleClose}
+                            />
+                        </div>
+                        <div>
+                            <DeletePost
+                            open={this.state.openDelete}
+                            handleClose={this.handleClose}
+                            deletePost={()=>this.props.deleteUserPost(post.postId)}
+
+                            />
+                        </div>
+                       
                 </Card>
             </div>
         )

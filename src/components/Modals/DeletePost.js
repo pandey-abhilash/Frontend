@@ -6,6 +6,8 @@ import EditPostForm from '../Modals/EditPostForm'
 //import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 //import DialogTitle from '@material-ui/core/DialogTitle';
+import { connect } from 'react-redux';
+import postsReducer from '../../redux/actions/postReducer'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -14,9 +16,16 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 class DeletePost extends Component{
     constructor(props) {
         super(props)
+        this.state={
+            postId:''
+        }
+        
     }
+    
     render(){
-        const { open, handleClose } = this.props
+        const { open, handleClose,deletePost } = this.props
+       
+        
         return(
             <div>
                 <Dialog
@@ -31,14 +40,14 @@ class DeletePost extends Component{
                             <DialogTitle id="alert-dialog-slide-title">{"Are you Sure You want to delete?"}</DialogTitle>
                                     <DialogContent>
                                     <DialogContentText id="alert-dialog-slide-description">
-                                        Delete...
+                                        Delete Post...
                                     </DialogContentText>
                                     </DialogContent>
                                     <DialogActions>
-                                    <Button onClick={handleClose} color="primary">
+                                    <Button  color="primary" style={{color:"blue"}} onClick={(e)=>deletePost(e)}>
                                         Delete
                                     </Button>
-                                    <Button onClick={handleClose} color="primary">
+                                    <Button  color="primary" style={{color:"blue"}} onClick={() => handleClose()}>
                                         Cancel
                                     </Button>
                                     </DialogActions>
@@ -47,4 +56,10 @@ class DeletePost extends Component{
         )
     }
 }
-export default DeletePost
+export default connect(state => ({
+    user: state.get('auth').user,
+    myposts: state.get('posts').myposts
+})
+    , dispatch => ({
+        postsReducer: postsReducer.getActions(dispatch)
+    }))(DeletePost)

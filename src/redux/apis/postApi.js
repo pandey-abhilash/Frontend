@@ -23,3 +23,8 @@ export async function likePost(body){
 export async function commentPost(body){
     return axios.put(`${config.backendUrl}/posts/comments`,body)
 }
+
+export async function deletePost(body){
+    console.log(body)
+    return axios.delete(`${config.backendUrl}/posts/delete`,body)
+}
