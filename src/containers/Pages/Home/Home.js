@@ -4,7 +4,7 @@ import { Grid, Paper } from '@material-ui/core';
 import { connect } from 'react-redux';
 import postsReducer from '../../../redux/actions/postReducer'
 import MyPostCard from '../../../components/Cards/MyPostCard'
-
+import AllUserCard from '../../../components/Cards/AllUserCard'
 class Home extends Component {
     constructor(props){
         super(props)
@@ -55,7 +55,12 @@ class Home extends Component {
                     </Grid>
                     <Grid item sm={12} md={3} lg={3}>
                         <Paper style={{ height: 'auto', padding: '20px' }}>
-                            hello
+                        {myallpost.length > 0 && myallpost.map(post => {
+                                return <AllUserCard
+                                key={post._id}
+                                    post={post}
+                                />
+                            })}
                         </Paper>
                     </Grid>
                 </Grid>

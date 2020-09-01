@@ -75,11 +75,11 @@ class MyPostCard extends Component {
         })
     }
 
-    // componentWillReceiveProps(nextProps){
-    //     if(this.props!==nextProps){
-    //         this.props=nextProps
-    //     }
-    // }
+    componentWillReceiveProps(nextProps){
+        if(this.props!==nextProps){
+            this.props=nextProps
+        }
+    }
 
     componentDidMount() {
         // this.fetchPostComments()
@@ -277,7 +277,7 @@ class MyPostCard extends Component {
                             <DeletePost
                             open={this.state.openDelete}
                             handleClose={this.handleClose}
-                            deletePost={()=>this.props.deleteUserPost(post.postId)}
+                            deletePost={this.deletePost}
 
                             />
                         </div>
