@@ -85,7 +85,6 @@ class Home extends Component {
                         </Paper>
                     </Grid>
                     <Grid item sm={12} md={6} lg={6}>
-                        <Paper style={{ height: 'auto', padding: '20px' }}>
                         {myallpost.length > 0 && myallpost.map(post => {
                                 return <MyPostCard
                                 key={post._id}
@@ -95,7 +94,6 @@ class Home extends Component {
                                     deleteUserPost={this.deleteUserPost}
                                 />
                             })}
-                        </Paper>
                     </Grid>
                     <Grid item sm={12} md={3} lg={3}>
                         <Paper style={{ height: 'auto', padding: '20px' }}>

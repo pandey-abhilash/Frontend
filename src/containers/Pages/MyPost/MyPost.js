@@ -104,7 +104,11 @@ class MyPost extends Component {
 
     deleteUserPost(postId){
         const{postsReducer}=this.props
-        postsReducer.deletePost({postId})
+        postsReducer.deletePost({postId}).then(res=>{
+            if(res.success){
+                this.onGetMyPosts();
+            }
+        })
          
     }
 
