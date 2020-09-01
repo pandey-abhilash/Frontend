@@ -13,6 +13,9 @@ class Home extends Component {
             pageSize: 4
         }
         this.onGetAllPosts=this.onGetAllPosts.bind(this)
+        this.onSubmitComment = this.onSubmitComment.bind(this);
+        this.onAddLike = this.onAddLike.bind(this)
+        this.deleteUserPost=this.deleteUserPost.bind(this)
     }
 
     componentDidMount() {
@@ -32,6 +35,44 @@ class Home extends Component {
         });
         }
 
+        onAddLike(postId) {
+            const { postsReducer, user, myallpost } = this.props
+            let findPost = myallpost.filter(p => p.postId === postId);
+            if (findPost.length > 0) {
+                let checkLikeExits = findPost[0].likes.filter(l => l.email === user.email);
+                if (checkLikeExits.length > 0) {
+                    return
+                }
+            }
+            postsReducer.likePost({
+                postId,
+                likesBy: { email: user.email, displayName: user.displayName,likeAt: Date.now()}
+            }).then(res => {
+                if (res.success) {
+                    this.onGetAllPosts()
+                }
+            })
+        }
+
+        onSubmitComment(postId, commentMessage) {
+            const { postsReducer, user } = this.props;
+            postsReducer.commentPost({
+                postId,
+                commentBy: {
+                    email: user.email, displayName: user.displayName, commentMessage,
+                }
+            }).then(res => {
+                if (res.success) {
+                    this.onGetAllPosts()
+                }
+            })
+        }
+        deleteUserPost(postId){
+            const{postsReducer}=this.props
+            postsReducer.deletePost({postId})
+             
+        }
+
     render() {
         const{myallpost}=this.props
         console.log(myallpost)
@@ -49,6 +90,9 @@ class Home extends Component {
                                 return <MyPostCard
                                 key={post._id}
                                     post={post}
+                                    onAddLike={this.onAddLike}
+                                    onSubmitComment={this.onSubmitComment}
+                                    deleteUserPost={this.deleteUserPost}
                                 />
                             })}
                         </Paper>
