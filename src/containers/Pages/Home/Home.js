@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import postsReducer from '../../../redux/actions/postReducer'
 import MyPostCard from '../../../components/Cards/MyPostCard'
 import AllUserCard from '../../../components/Cards/AllUserCard'
+import userReducer from '../../../redux/actions/authReducer'
 class Home extends Component {
     constructor(props){
         super(props)
@@ -16,10 +17,15 @@ class Home extends Component {
         this.onSubmitComment = this.onSubmitComment.bind(this);
         this.onAddLike = this.onAddLike.bind(this)
         this.deleteUserPost=this.deleteUserPost.bind(this)
+        this.onGetAllUserPosts=this.onGetAllUserPosts.bind(this)
     }
 
     componentDidMount() {
         this.onGetAllPosts();
+    }
+
+    componentWillMount(){
+        this.onGetAllUserPosts();
     }
     
     onGetAllPosts(){
@@ -34,6 +40,19 @@ class Home extends Component {
             pageSize
         });
         }
+        onGetAllUserPosts(){
+            const { pageNumber, pageSize } = this.state
+            const { userReducer, user } = this.props
+            console.log(userReducer)
+            userReducer.fetchAllUserPosts({
+                email: user.email,
+                pageNumber,
+                pageSize
+            });
+            }
+
+
+
 
         onAddLike(postId) {
             const { postsReducer, user, myallpost } = this.props
@@ -74,8 +93,9 @@ class Home extends Component {
         }
 
     render() {
-        const{myallpost}=this.props
+        const{myallpost,myalluserpost}=this.props
         console.log(myallpost)
+        console.log(myalluserpost)
         return (
             <div className='profile'>
                 <Grid container justify="space-between" >
@@ -97,7 +117,7 @@ class Home extends Component {
                     </Grid>
                     <Grid item sm={12} md={3} lg={3}>
                         <Paper style={{ height: 'auto', padding: '20px' }}>
-                        {myallpost.length > 0 && myallpost.map(post => {
+                        {myalluserpost.length > 0 && myalluserpost.map(post => {
                                 return <AllUserCard
                                 key={post._id}
                                     post={post}
@@ -113,9 +133,11 @@ class Home extends Component {
 export default connect(
     state=>({
     user: state.get('auth').user,
+    myalluserpost:state.get('auth').myalluserpost,
     myallpost: state.get('posts').myallpost
     }),
     dispatch=>({
+        userReducer:userReducer.getActions(dispatch),
         postsReducer: postsReducer.getActions(dispatch)
     })
 )(Home)

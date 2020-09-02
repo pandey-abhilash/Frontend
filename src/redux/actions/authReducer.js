@@ -10,6 +10,7 @@ const initialState = {
     user: null, 
     error: null,
     loading: false,
+    myalluserpost:[]
 };
 const reducerFactory = new ReducerFactory(reducerName, initialState);
 reducerFactory.addAction('LOGIN_LOADING', `${reducerName}Loading`,
@@ -78,6 +79,24 @@ reducerFactory.addAction('AUTH_CHECK_USERS', 'authCheckUser',
   }
 );
 
+reducerFactory.addAction('MY_All_USER_POSTS', 'fetchAllUserPosts',
+  async (body) => {
+      console.log(body)
+    const response= await authAPI.fetchAllUserPosts(body);
+    return response.data
+  },
+   (state, action) => {
+     //debugger
+     if(action.data.success){
+       state.myalluserpost= action.data.data
+     }else{
+      toastr.error(action.data.message)
+     }
+     state.loading=false
+    const newState = Object.assign({}, state);
+    return newState;
+  }
+);
 
 
 

@@ -9,3 +9,9 @@ export async function loginUser(body){
     
     return axios.post(`${config.backendUrl}/users/login`,body)
 }
+
+export async function fetchAllUserPosts(params){
+    console.log(params)
+    console.log(params.pageNumber)
+    return axios.get(`${config.backendUrl}/users/${params.pageNumber}/${params.pageSize}`)
+}
