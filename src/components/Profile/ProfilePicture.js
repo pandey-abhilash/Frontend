@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Button, Menu, MenuItem, Grid } from '@material-ui/core'
+//import { Button, Menu, MenuItem, Grid } from '@material-ui/core'
 import EditProfile from '../Modals/EditProfile'
+import {
+    Button, Menu, MenuItem, Grid ,Paper,Card,CardContent,Typography,Avatar,CardHeader,IconButton,CardActions
+    } from '@material-ui/core'
+import { MoreVert, ExpandMore, Favorite, Share, Comment ,CreateNewFolder} from '@material-ui/icons/';
+import '../../styles/style.css'
+import MailIcon from '@material-ui/icons/Mail';
+import CallIcon from '@material-ui/icons/Call';
 
 class ProfilePicture extends Component {
     constructor(props) {
@@ -67,32 +74,60 @@ class ProfilePicture extends Component {
 
                         </div>
                     </Grid>
-                    <Grid item sm={12} md={12} lg={12}>
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <div style={{ padding: '3px' }}>
-                                <img
-                                    className="profile_pic"
-                                    src='https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg'
-                                    alt='img'
-                                />
+                    
+                    <Card
+                    style={{ padding: "20px", marginBottom: '20px',width:"80%"}}
+                >
+                        
+                        <div class="header1">
+                            
+                            <div class="left">
+                            <Avatar aria-label="recipe" style={{ textTransform: 'capitalize' ,height:"80px", width:'80px',marginLeft:'10px'}}
+                            >
+                               {user.displayName ? user.displayName[0] : 'N/A'}
+                                
+                            </Avatar>
                             </div>
-                            <div style={{ padding: '5px' }}>
-                                <span style={{ color: '#fff', fontWeight: '500' }}>
-                                    <h2>
-                                        <i>
-                                            {user.displayName}
-                                        </i>
-                                    </h2>
-                                </span>
+                           
+                            <div class="right">
+                                <Typography >{user.displayName}</Typography>
+                                <Typography >Student,Kipm -CET</Typography>
+                                <Typography >Year, 2016 to 2019</Typography>
+                                <Typography > Reset Password</Typography>
                             </div>
-                            <div>
+                            <div class="last">
+                                <div>
+                            <IconButton>
+                                     <MailIcon/> 
+                                </IconButton>
+                            <Typography variant="button" gutterBottom>
+                                {user.email}
+                                </Typography>
+                                <IconButton style={{marginLeft:"140px"}}>
+                                     <CallIcon/> 
+                                </IconButton>
+                            <Typography variant="button" gutterBottom >
+                                {user.phone}
+                                </Typography>
+                                </div>
+                                <div>
+                                <IconButton>
+                                     <CallIcon/> 
+                                </IconButton>
+                            <Typography variant="button" gutterBottom>
+                            {user.phone}
+                                </Typography>
+                                </div>
+                            </div>
+                        </div>
+                  </Card> 
+              
+                         <div>
                                 <EditProfile
                                     open={this.state.open}
                                     handleClose={this.handleClose}
                                 />
-                            </div>
                         </div>
-                    </Grid>
                 </Grid>
 
 

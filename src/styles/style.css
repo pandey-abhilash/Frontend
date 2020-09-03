@@ -1,0 +1,40 @@
+.header1{
+    width: 1600px;
+    height: 100px;
+}
+.left{
+    width: 80px;
+    height: 80px;
+    float: left;
+    margin-left: 10px;
+}
+.right{
+    width: 300px;
+    height: 95px;
+   float: left;
+   margin-left: 30px;
+   
+}
+.last{
+    width: 700px;
+    height: 95px;
+    float: right;
+}
+.cardheader{
+    width: 80%;
+    height: 200px;
+    margin-top: 30px;
+    
+}
+.cardleft{
+    width: 48%;
+    height: 200px;
+    background-color: royalblue;
+    float: left;
+}
+.cardright{
+    width: 48%;
+    height: 200px;
+    background-color: sienna;
+    float: right;
+}
