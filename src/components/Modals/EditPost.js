@@ -1,15 +1,12 @@
 import React ,{Component} from 'react'
-import { Dialog, DialogTitle, DialogContent, Button, DialogActions } from '@material-ui/core/';
+import { Dialog, DialogTitle, DialogContent } from '@material-ui/core/';
 import Slide from '@material-ui/core/Slide';
 import EditPostForm from '../Modals/EditPostForm'
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-class EditPost extends Component{
-    constructor(props) {
-        super(props)
-    }
+class EditPost extends Component{ 
     render(){
         const { open, handleClose } = this.props
         return(

@@ -14,7 +14,7 @@ class ProfilePicture extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            openMenu: null,
+            openMenu: null,              
             open: false
         }
         this.openEditMenu = this.openEditMenu.bind(this)

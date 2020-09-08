@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import history from '../../utils/history'
+//import history from '../../utils/history'
 // import config from '../../utils/config';
 import { Link } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
-import { Grid, Typography, Avatar, FormControlLabel, Checkbox } from '@material-ui/core';
+import { Grid, Typography, Avatar} from '@material-ui/core';
 
 class LoginForm extends Component {
     constructor(props) {

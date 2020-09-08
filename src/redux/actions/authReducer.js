@@ -98,6 +98,24 @@ reducerFactory.addAction('MY_All_USER_POSTS', 'fetchAllUserPosts',
   }
 );
 
+reducerFactory.addAction('DELETE_USERS', 'deleteUser',
+  async (body) => {
+    console.log(body)
+    //debugger
+    const response= await authAPI.deleteUser(body);
+    return response.data
+  },
+   (state, action) => {
+     if(action.data.success){
+       toastr.success(action.data.message)
+     }else{
+      toastr.error(action.data.message)
+     }
+     state.loading=false
+    const newState = Object.assign({}, state);
+    return newState;
+  }
+);
 
 
 export default reducerFactory;

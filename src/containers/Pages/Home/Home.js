@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import '../../../styles/Profile.css';
-import { Grid, Paper } from '@material-ui/core';
+import { Grid, Paper, Typography,Divider } from '@material-ui/core';
 import { connect } from 'react-redux';
 import postsReducer from '../../../redux/actions/postReducer'
 import MyPostCard from '../../../components/Cards/MyPostCard'
 import AllUserCard from '../../../components/Cards/AllUserCard'
 import userReducer from '../../../redux/actions/authReducer'
+import followReducer from '../../../redux/actions/followReducer'
 class Home extends Component {
     constructor(props){
         super(props)
@@ -18,20 +19,20 @@ class Home extends Component {
         this.onAddLike = this.onAddLike.bind(this)
         this.deleteUserPost=this.deleteUserPost.bind(this)
         this.onGetAllUserPosts=this.onGetAllUserPosts.bind(this)
+        this.sendFollowUserRequest=this.sendFollowUserRequest.bind(this)
+        this.deleteFollowUser=this.deleteFollowUser.bind(this)
     }
 
     componentDidMount() {
         this.onGetAllPosts();
-    }
-
-    componentWillMount(){
         this.onGetAllUserPosts();
     }
+
     
     onGetAllPosts(){
         const { pageNumber, pageSize } = this.state
         const { postsReducer, user } = this.props
-        console.log(postsReducer)
+        //console.log(postsReducer)
         //console.log(pageNumber,pageSize)
         //debugger
         postsReducer.fetchAllPosts({
@@ -42,8 +43,8 @@ class Home extends Component {
         }
         onGetAllUserPosts(){
             const { pageNumber, pageSize } = this.state
-            const { userReducer, user } = this.props
-            console.log(userReducer)
+            const { userReducer, user ,myalluserpost} = this.props
+           // console.log(userReducer)
             userReducer.fetchAllUserPosts({
                 email: user.email,
                 pageNumber,
@@ -92,10 +93,27 @@ class Home extends Component {
              
         }
 
+        sendFollowUserRequest(body){
+            const{followReducer}=this.props
+           
+            followReducer.sendFollowRequest(body).then(res=>{
+                if(res.success){
+                    this.onGetAllUserPosts()
+                }
+            })
+        }
+
+        deleteFollowUser(email){
+            const{userReducer}=this.props
+            userReducer.deleteUser({email}).then(res=>{
+                if(res.success){
+                    this.onGetAllUserPosts()
+                }
+            })
+        }
+
     render() {
         const{myallpost,myalluserpost}=this.props
-        console.log(myallpost)
-        console.log(myalluserpost)
         return (
             <div className='profile'>
                 <Grid container justify="space-between" >
@@ -117,10 +135,17 @@ class Home extends Component {
                     </Grid>
                     <Grid item sm={12} md={3} lg={3}>
                         <Paper style={{ height: 'auto', padding: '20px' }}>
-                        {myalluserpost.length > 0 && myalluserpost.map(post => {
+                            <Typography
+                            varient="h6"
+                            >Follow You Friends</Typography> 
+                            <Divider/>
+                        {myalluserpost.length > 0 && myalluserpost.map(followUser => {
+                        
                                 return <AllUserCard
-                                key={post._id}
-                                    post={post}
+                                key={followUser._id}
+                                followUser={followUser}
+                                sendFollowUserRequest={this.sendFollowUserRequest}
+                                deleteFollowUser={this.deleteFollowUser}
                                 />
                             })}
                         </Paper>
@@ -138,6 +163,7 @@ export default connect(
     }),
     dispatch=>({
         userReducer:userReducer.getActions(dispatch),
-        postsReducer: postsReducer.getActions(dispatch)
+        postsReducer: postsReducer.getActions(dispatch),
+        followReducer:followReducer.getActions(dispatch)
     })
 )(Home)

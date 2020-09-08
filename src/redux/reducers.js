@@ -8,6 +8,7 @@ import history from '../utils/history';
 import auth from '../redux/actions/authReducer'
 import posts from '../redux/actions/postReducer';
 import comments from '../redux/actions/commentReducer';
+import follows from '../redux/actions/followReducer'
 /**
  * Creates the main reducer with the dynamically injected ones
  */
@@ -17,6 +18,7 @@ export default function createReducer(injectedReducers = {}) {
     auth: auth.getReducer(),
     posts: posts.getReducer(),
     comments: comments.getReducer(),
+    follows:follows.getReducer(),
     router: connectRouter(history),
     ...injectedReducers,
   });
