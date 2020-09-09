@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-//import history from '../../utils/history'
-// import config from '../../utils/config';
 import { Link } from 'react-router-dom';
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';

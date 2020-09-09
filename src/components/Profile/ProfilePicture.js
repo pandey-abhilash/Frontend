@@ -3,9 +3,8 @@ import { connect } from 'react-redux'
 //import { Button, Menu, MenuItem, Grid } from '@material-ui/core'
 import EditProfile from '../Modals/EditProfile'
 import {
-    Button, Menu, MenuItem, Grid ,Paper,Card,CardContent,Typography,Avatar,CardHeader,IconButton,CardActions
-    } from '@material-ui/core'
-import { MoreVert, ExpandMore, Favorite, Share, Comment ,CreateNewFolder} from '@material-ui/icons/';
+    Button, Menu, MenuItem, Grid, Card, Typography, Avatar, IconButton
+} from '@material-ui/core'
 import '../../styles/style.css'
 import MailIcon from '@material-ui/icons/Mail';
 import CallIcon from '@material-ui/icons/Call';
@@ -14,13 +13,14 @@ class ProfilePicture extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            openMenu: null,              
+            openMenu: null,
             open: false
         }
         this.openEditMenu = this.openEditMenu.bind(this)
         this.handleOpen = this.handleOpen.bind(this)
         this.handleClose = this.handleClose.bind(this)
     }
+    
     handleClose() {
         this.setState({
             open: false
@@ -74,21 +74,21 @@ class ProfilePicture extends Component {
 
                         </div>
                     </Grid>
-                    
+
                     <Card
-                    style={{ padding: "20px", marginBottom: '20px',width:"80%"}}
-                >
-                        
+                        style={{ padding: "20px", marginBottom: '20px', width: "80%" }}
+                    >
+
                         <div class="header1">
-                            
+
                             <div class="left">
-                            <Avatar aria-label="recipe" style={{ textTransform: 'capitalize' ,height:"80px", width:'80px',marginLeft:'10px'}}
-                            >
-                               {user.displayName ? user.displayName[0] : 'N/A'}
-                                
-                            </Avatar>
+                                <Avatar aria-label="recipe" style={{ textTransform: 'capitalize', height: "80px", width: '80px', marginLeft: '10px' }}
+                                >
+                                    {user.displayName ? user.displayName[0] : 'N/A'}
+
+                                </Avatar>
                             </div>
-                           
+
                             <div class="right">
                                 <Typography >{user.displayName}</Typography>
                                 <Typography >Student,Kipm -CET</Typography>
@@ -97,37 +97,37 @@ class ProfilePicture extends Component {
                             </div>
                             <div class="last">
                                 <div>
-                            <IconButton>
-                                     <MailIcon/> 
-                                </IconButton>
-                            <Typography variant="button" gutterBottom>
-                                {user.email}
-                                </Typography>
-                                <IconButton style={{marginLeft:"140px"}}>
-                                     <CallIcon/> 
-                                </IconButton>
-                            <Typography variant="button" gutterBottom >
-                                {user.phone}
-                                </Typography>
+                                    <IconButton>
+                                        <MailIcon />
+                                    </IconButton>
+                                    <Typography variant="button" gutterBottom>
+                                        {user.email}
+                                    </Typography>
+                                    <IconButton style={{ marginLeft: "140px" }}>
+                                        <CallIcon />
+                                    </IconButton>
+                                    <Typography variant="button" gutterBottom >
+                                        {user.phone}
+                                    </Typography>
                                 </div>
                                 <div>
-                                <IconButton>
-                                     <CallIcon/> 
-                                </IconButton>
-                            <Typography variant="button" gutterBottom>
-                            {user.phone}
-                                </Typography>
+                                    <IconButton>
+                                        <CallIcon />
+                                    </IconButton>
+                                    <Typography variant="button" gutterBottom>
+                                        {user.phone}
+                                    </Typography>
                                 </div>
                             </div>
                         </div>
-                  </Card> 
-              
-                         <div>
-                                <EditProfile
-                                    open={this.state.open}
-                                    handleClose={this.handleClose}
-                                />
-                        </div>
+                    </Card>
+
+                    <div>
+                        <EditProfile
+                            open={this.state.open}
+                            handleClose={this.handleClose}
+                        />
+                    </div>
                 </Grid>
 
 

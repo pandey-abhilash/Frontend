@@ -1,8 +1,6 @@
 /* eslint-disable no-param-reassign */
 import ReducerFactory from '../../utils/reducerFactory';
 import * as commentAPI from '../apis/commentApi';
-import toastr from 'toastr';
-import { act } from 'react-dom/test-utils';
 
 const reducerName = 'comments';
 const initialState = {

@@ -2,21 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import {
     Button,
-    CardHeader, Card, Icon, IconButton, Avatar, CardActions, TextField
+    CardHeader, Avatar
 } from '@material-ui/core'
-import moment from 'moment'
-import { MoreVert, ExpandMore, Favorite, Share, Comment } from '@material-ui/icons/';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import postsReducer from '../../redux/actions/postReducer'
+
 
 class AllUserCard extends Component {
     constructor(props) {
         super(props)
-        this.followAccept = this.followAccept.bind(this)
+        this.followRequest = this.followRequest.bind(this)
         this.deleteUserFollow=this.deleteUserFollow.bind(this)
     }
-    followAccept(e) {
+    followRequest(e) {
         const userEmail = e.currentTarget.id
         const { myalluserpost, sendFollowUserRequest, user } = this.props
         const followUser = myalluserpost.filter(u => u.email === userEmail)
@@ -48,13 +44,13 @@ class AllUserCard extends Component {
                    // subheader={`Joined At ${moment(followUser.createdAt).format('lll')} `}
 
                 />
-                <div style={{  alignContent: "end" }}>
+                <div style={{  alignContent: "end" ,marginTop:"27px",marginLeft:"20px"}}>
                     {!followUser.pendingRequest && <Button
                         id={followUser.email}
                         variant="contained"
                         color="primary"
                         size="small"
-                        onClick={(e) => this.followAccept(e)}
+                        onClick={(e) => this.followRequest(e)}
                     >
                         Follow Request
                                             </Button>}

@@ -1,6 +1,6 @@
 // Component
 import React ,{Component} from 'react'
-import { Dialog, DialogTitle, DialogContent, Button, DialogActions } from '@material-ui/core/';
+import { Dialog, DialogTitle, DialogContent } from '@material-ui/core/';
 import {connect} from 'react-redux'
 import userReducer from '../../redux/actions/authReducer'
 
@@ -12,9 +12,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 class EditProfile extends Component {
-    constructor(props) {
-        super(props)
-    }
+    
     render() {
         const { open, handleClose } = this.props
         console.log(this.props.user)

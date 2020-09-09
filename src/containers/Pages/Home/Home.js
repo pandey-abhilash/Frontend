@@ -103,9 +103,9 @@ class Home extends Component {
             })
         }
 
-        deleteFollowUser(email){
-            const{userReducer}=this.props
-            userReducer.deleteUser({email}).then(res=>{
+        deleteFollowUser(followToEmailId){
+            const{followReducer,user}=this.props
+            followReducer.deleteFollower({followToEmailId,followByEmailId:user.email}).then(res=>{
                 if(res.success){
                     this.onGetAllUserPosts()
                 }
@@ -137,7 +137,7 @@ class Home extends Component {
                         <Paper style={{ height: 'auto', padding: '20px' }}>
                             <Typography
                             varient="h6"
-                            >Follow You Friends</Typography> 
+                            >Follow Your Friends</Typography> 
                             <Divider/>
                         {myalluserpost.length > 0 && myalluserpost.map(followUser => {
                         

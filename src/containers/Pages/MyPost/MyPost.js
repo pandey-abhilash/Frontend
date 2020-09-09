@@ -10,6 +10,9 @@ import moment from 'moment'
 import { MoreVert, ExpandMore, Favorite, Share, CreateNewFolder } from '@material-ui/icons/';
 import postsReducer from '../../../redux/actions/postReducer';
 import MyPostCard from '../../../components/Cards/MyPostCard';
+import userReducer from '../../../redux/actions/authReducer'
+import followReducer from '../../../redux/actions/followReducer'
+import FollowAcceptedCard from '../../../components/Cards/FollowAcceptedCard'
 
 class MyPost extends Component {
     constructor() {
@@ -17,18 +20,32 @@ class MyPost extends Component {
         this.state = {
             data: false,
             pageNumber: 0,
-            pageSize: 10,
+            pageSize: 4,
             message: '',
             expanded: false,
+
         }
         this.onGetMyPosts = this.onGetMyPosts.bind(this);
         this.onCreatePosts = this.onCreatePosts.bind(this);
         this.onSubmitComment = this.onSubmitComment.bind(this);
         this.onAddLike = this.onAddLike.bind(this)
         this.deleteUserPost=this.deleteUserPost.bind(this)
+        this.acceptRequest=this.acceptRequest.bind(this)
+        this.fetchPendingRequest=this.fetchPendingRequest.bind(this)
     }
     componentDidMount() {
         this.onGetMyPosts();
+        this.fetchPendingRequest();
+    }
+
+    fetchPendingRequest(){
+            const { pageNumber, pageSize } = this.state
+            const { followReducer, user } = this.props
+            followReducer.fetchPendingRequestFollowers({
+                email: user.email,
+                pageNumber,
+                pageSize
+            });
     }
 
     onCreatePosts() {
@@ -112,9 +129,19 @@ class MyPost extends Component {
          
     }
 
+    acceptRequest(followByEmailId){
+        const{followReducer,user}=this.props
+        followReducer.acceptFollowRequest({followToEmailId:user.email,followByEmailId}).then(res=>{
+            if(res.success){
+                this.fetchPendingRequest()
+            }
+        })
+
+    }
     render() {
         const data = this.state.data;
-        const { myposts } = this.props
+        const { myposts ,pendingfollowers} = this.props
+        console.log(pendingfollowers)
         return (
             <div className='profile'>
                 <Grid container justify="space-between" >
@@ -183,7 +210,17 @@ class MyPost extends Component {
                     </Grid>
                     <Grid item sm={12} md={3} lg={3}>
                         <Paper style={{ height: 'auto', padding: '20px' }}>
-                            This section is user to display friends follower
+                        <Typography
+                            varient="h6"
+                            >Accept Your Friends</Typography> 
+                            <Divider/>
+                            {pendingfollowers.length > 0 && pendingfollowers.map(pendingRequest => {
+                                return <FollowAcceptedCard
+                                key={pendingRequest._id}
+                                pendingRequest={pendingRequest} 
+                                acceptRequest={this.acceptRequest}                       
+                        />
+                    })}
                         </Paper>
                     </Grid>
 
@@ -197,8 +234,12 @@ class MyPost extends Component {
 
 export default connect(state => ({
     user: state.get('auth').user,
+    pendingfollowers: state.get('follows').pendingfollowers,
     myposts: state.get('posts').myposts
 })
     , dispatch => ({
-        postsReducer: postsReducer.getActions(dispatch)
+        userReducer:userReducer.getActions(dispatch),
+        postsReducer: postsReducer.getActions(dispatch),
+        followReducer:followReducer.getActions(dispatch)
+        
     }))(MyPost)

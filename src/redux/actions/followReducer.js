@@ -9,6 +9,7 @@ const initialState = {
     total:0,
     error: null,
     loading: false,
+    pendingfollowers:[]
 };
 
 const reducerFactory = new ReducerFactory(reducerName, initialState);
@@ -36,4 +37,56 @@ reducerFactory.addAction('SEND_FOLLOW_REQUEST', 'sendFollowRequest',
     return newState;
   }
 );
+
+reducerFactory.addAction('DELETE_FOLLOW_REQUEST', 'deleteFollower',
+  async (body) => {
+    const response= await followAPI.deleteFollower(body);
+    return response.data
+  },
+   (state, action) => {
+     if(action.data.success){
+       toastr.success(action.data.message)
+     }else{
+      toastr.error(action.data.message)
+     }
+     state.loading=false
+    const newState = Object.assign({}, state);
+    return newState;
+  }
+);
+
+reducerFactory.addAction('FETCH_PENDING_REQUEST_FOLLOWERS', 'fetchPendingRequestFollowers',
+  async (body) => {
+    const response= await followAPI.fetchPendingRequestFollowers(body);
+    return response.data
+  },
+   (state, action) => {
+     if(action.data.success){
+       state.pendingfollowers= action.data.data
+     }else{
+      toastr.error(action.data.message)
+     }
+     state.loading=false
+    const newState = Object.assign({}, state);
+    return newState;
+  }
+);
+
+reducerFactory.addAction('ACCEPT_FOLLOW_REQUEST', 'acceptFollowRequest',
+  async (body) => {
+    const response= await followAPI.acceptFollowRequest(body);
+    return response.data
+  },
+   (state, action) => {
+     if(action.data.success){
+       toastr.success(action.data.message)
+     }else{
+      toastr.error(action.data.message)
+     }
+     state.loading=false
+    const newState = Object.assign({}, state);
+    return newState;
+  }
+);
+
 export default reducerFactory;

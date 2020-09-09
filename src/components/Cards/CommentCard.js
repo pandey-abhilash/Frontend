@@ -1,7 +1,5 @@
 import React from 'react'
-import { MoreVert, ExpandMore, Favorite, Share, Comment } from '@material-ui/icons/';
-import moment from 'moment'
-import { Card, CardHeader, Divider, CardActions, IconButton, Avatar, Typography, CardContent } from '@material-ui/core'
+import {  CardHeader ,Avatar} from '@material-ui/core'
 
 const CommentCard = (props) => {
     const { comment } = props;
