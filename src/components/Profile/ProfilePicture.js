@@ -46,7 +46,6 @@ class ProfilePicture extends Component {
         return (
             <div>
                 <Grid container  justyfy="flex" alignItems="center">
-                    <Grid item xs={12}><div>Edit Profile</div></Grid>
                     <Grid item xs={4}>
                         <div class="header1">
                             <div class="left">
@@ -82,6 +81,34 @@ class ProfilePicture extends Component {
                                     </Typography>
                                 </div>
                         
+                    </Grid>
+                    <Grid item xs={4}>
+                        <div>
+                        <Button
+                                variant='container'
+                                color="primary"
+                                style={{ color: '#000' }}
+                                aria-controls="simple-menu"
+                                aria-haspopup="true"
+                                onClick={(e) => this.openEditMenu(e)}
+                            >
+                                Edit Profile
+                   </Button>
+                            <Menu
+                                id="simple-menu"
+                                anchorEl={openMenu}
+                                keepMounted
+                                open={Boolean(openMenu)}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'center',
+                                }}
+                                onClose={() => this.setState({ openMenu: null })}
+                            >
+                                <MenuItem onClick={this.handleOpen}>Edit Profile</MenuItem>
+                                <MenuItem onClick={() => { }}>Edit Picture</MenuItem>
+                            </Menu>
+                        </div>
                     </Grid>
                 </Grid>
                 
@@ -163,6 +190,10 @@ class ProfilePicture extends Component {
                             handleClose={this.handleClose}
                         />
                     </div> */}
+                     <EditProfile
+                            open={this.state.open}
+                            handleClose={this.handleClose}
+                        />
             </div>
         )
     }

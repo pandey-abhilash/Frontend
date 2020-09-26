@@ -23,86 +23,87 @@ class ProfileAbout extends Component {
     }
     render() {
         return (
-            <section >
-                <div className="about">
-                    <Grid
-                        container
-                        justify="space-around"
-                        alignItems="center"
-                        alignContent="center"
-                        spacing={2}
-                    >
-                        { <Grid item sm={12}  xs={12} md={4} lg={3}>
-                            <Card className="card" style={{marginLeft:"130px" }}>
-                                <div style={{ padding: '10px' }}>
-                                    <div className="heading">
-                                        <Typography variant="h5">Personal Details</Typography>
-                                    </div>
-                                    <Divider />
-                                    <CardContent>
-                                    <PersonalDetail user={this.props.user}/>
-                                    </CardContent>
-                                </div>
-                            </Card>
-                        </Grid> }
-                        <Grid item sm={12} xs={12} md={8} lg={8}>
-                            <Card className="card" style={{ width: '81%' ,marginLeft:"100px"}}>
-                                <div style={{ padding: '10px' }}>
-                                    <div >
-                                        <Typography variant="h5" color="primary">Academic Details</Typography>
-                                    </div>
-                                    <Divider />
-                                    <CardContent>
-                                        <div>
-                                            <ProfileBasicDetail user={this.props.user}/>
-                                        </div>
-                                    </CardContent>
-                                </div>
-                            </Card>
-                        </Grid>
-                        <Card
-                    style={{ padding: "20px", marginTop: '20px',width:"80%",height:"100px"}}
-                >
-                    <Typography>Social Networks</Typography>
-                    <Divider/>
-                    <div>
-                        <IconButton>
-                            <FacebookIcon/>
-                        </IconButton>
-                        <Typography variant="button" gutterBottom>Connect</Typography>
-                        <IconButton style={{marginLeft:"50px"}}>
-                            <TwitterIcon/>
-                        </IconButton>
-                        <Typography variant="button" gutterBottom>Connect</Typography>
-                        <IconButton style={{marginLeft:"50px"}}>
-                            <LinkedInIcon/>
-                        </IconButton>
-                        <Typography variant="button" gutterBottom>Connect</Typography>
-                        <IconButton style={{marginLeft:"50px"}}>
-                            <InstagramIcon/>
-                        </IconButton>
-                        <Typography variant="button" gutterBottom>Connect</Typography>
-                        <IconButton style={{marginLeft:"50px"}}>
-                            <YouTubeIcon/>
-                        </IconButton>
-                        <Typography variant="button" gutterBottom>Connect</Typography>
-                    </div>
-                </Card>
-                <Card
-                    style={{ padding: "20px", marginTop: '20px',width:"80%",height:"100px"}}
-                >
-                    <Typography>Devices</Typography>
-                    <Divider/>
-                    <div>
-                    <IconButton>
-                            <PhoneAndroidIcon/>
-                        </IconButton>
-                        <Typography variant="button" gutterBottom>Lenovo</Typography>
-                    </div>
-                    </Card>
-                    </Grid>
-                </div>
-            </section>
+            <div></div>
+            // <section >
+            //     <div className="about">
+            //         <Grid
+            //             container
+            //             justify="space-around"
+            //             alignItems="center"
+            //             alignContent="center"
+            //             spacing={2}
+            //         >
+            //             { <Grid item sm={12}  xs={12} md={4} lg={3}>
+            //                 <Card className="card" style={{marginLeft:"130px" }}>
+            //                     <div style={{ padding: '10px' }}>
+            //                         <div className="heading">
+            //                             <Typography variant="h5">Personal Details</Typography>
+            //                         </div>
+            //                         <Divider />
+            //                         <CardContent>
+            //                         <PersonalDetail user={this.props.user}/>
+            //                         </CardContent>
+            //                     </div>
+            //                 </Card>
+            //             </Grid> }
+            //             <Grid item sm={12} xs={12} md={8} lg={8}>
+            //                 <Card className="card" style={{ width: '81%' ,marginLeft:"100px"}}>
+            //                     <div style={{ padding: '10px' }}>
+            //                         <div >
+            //                             <Typography variant="h5" color="primary">Academic Details</Typography>
+            //                         </div>
+            //                         <Divider />
+            //                         <CardContent>
+            //                             <div>
+            //                                 <ProfileBasicDetail user={this.props.user}/>
+            //                             </div>
+            //                         </CardContent>
+            //                     </div>
+            //                 </Card>
+            //             </Grid>
+            //             <Card
+            //         style={{ padding: "20px", marginTop: '20px',width:"80%",height:"100px"}}
+            //     >
+            //         <Typography>Social Networks</Typography>
+            //         <Divider/>
+            //         <div>
+            //             <IconButton>
+            //                 <FacebookIcon/>
+            //             </IconButton>
+            //             <Typography variant="button" gutterBottom>Connect</Typography>
+            //             <IconButton style={{marginLeft:"50px"}}>
+            //                 <TwitterIcon/>
+            //             </IconButton>
+            //             <Typography variant="button" gutterBottom>Connect</Typography>
+            //             <IconButton style={{marginLeft:"50px"}}>
+            //                 <LinkedInIcon/>
+            //             </IconButton>
+            //             <Typography variant="button" gutterBottom>Connect</Typography>
+            //             <IconButton style={{marginLeft:"50px"}}>
+            //                 <InstagramIcon/>
+            //             </IconButton>
+            //             <Typography variant="button" gutterBottom>Connect</Typography>
+            //             <IconButton style={{marginLeft:"50px"}}>
+            //                 <YouTubeIcon/>
+            //             </IconButton>
+            //             <Typography variant="button" gutterBottom>Connect</Typography>
+            //         </div>
+            //     </Card>
+            //     <Card
+            //         style={{ padding: "20px", marginTop: '20px',width:"80%",height:"100px"}}
+            //     >
+            //         <Typography>Devices</Typography>
+            //         <Divider/>
+            //         <div>
+            //         <IconButton>
+            //                 <PhoneAndroidIcon/>
+            //             </IconButton>
+            //             <Typography variant="button" gutterBottom>Lenovo</Typography>
+            //         </div>
+            //         </Card>
+            //         </Grid>
+            //     </div>
+            // </section>
         )
     }
 }
